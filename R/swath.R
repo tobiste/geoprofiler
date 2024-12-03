@@ -137,12 +137,12 @@ swath_profile <- function(x) {
   elevs.df <- as_tibble(elevs)
   names(elevs.df) <- seq_along(x$data)
 
-  elevs.df <- elevs.df  |>
+  elevs.df <- elevs.df |>
     rowwise() |>
     mutate(
       min = min(c_across()),
       max = max(c_across())
-    )  |>
+    ) |>
     ungroup()
   elevs.df <-
     tibble(
@@ -154,5 +154,3 @@ swath_profile <- function(x) {
   names(elevs.df) <- c("distance", "elevation", "min", "max")
   return(elevs.df)
 }
-
-

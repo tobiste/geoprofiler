@@ -26,3 +26,4 @@ VignetteBuilder: knitr
 Suggests: 
     knitr,
     rmarkdown
+URL: https://tobiste.github.io/geoprofiler/

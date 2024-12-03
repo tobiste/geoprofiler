@@ -69,7 +69,7 @@ profile_azimuth <- function(profile) {
     sf::st_transform("WGS84") |>
     sf::st_coordinates()
   tectonicr::get_azimuth(profile_deg[1, 2], profile_deg[1, 1], profile_deg[2, 2], profile_deg[2, 1]) |>
-    units::set_units('degree')
+    units::set_units("degree")
 }
 
 #' Combine Points to a Line
@@ -134,7 +134,7 @@ point_distance <- function(a, b, ...) {
   }
 
   tectonicr::dist_greatcircle(a_rad[, 1], a_rad[, 2], b_rad[, 1], b_rad[, 2], ...) |>
-    units::set_units('km')
+    units::set_units("km")
 }
 
 #' #' Distances in degree to kilometer

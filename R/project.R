@@ -86,7 +86,7 @@ project_on_line <- function(x, start, azimuth, drop.units = TRUE) {
   } else {
     res3 <- mutate_all(res2, set_units, value = "m")
   }
-  if(drop.units){
+  if (drop.units) {
     mutate_all(res3, drop_units)
   } else {
     res3
