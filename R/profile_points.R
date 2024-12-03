@@ -1,0 +1,154 @@
+#' Profile End Point
+#'
+#' Create a end point along a profile line starting at a point with a defined
+#' direction and length.
+#'
+#' @param x `sf` point object.
+#' @param azimuth numeric. Direction of profile in degrees.
+#' @param profile.length units object.
+#' @param crs Coordinate reference system. Should be readable by [sf::st_crs()].
+#' @param return.sf logical. Should the profile points be returned as a 'sf'
+#' ('TRUE', the default) object or as a data.frame.
+#'
+#' @note
+#' Use metric values (meters, kilometers, etc) in case of a projected coordinate reference frame, and degree
+#' when geographical coordinate reference frame.
+#'
+#' @return class depends on `return.sf`.
+#' @export
+#' @importFrom sf st_as_sf st_transform st_coordinates st_crs st_is_longlat
+#' @importFrom units set_units drop_units
+#'
+#' @examples
+#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1, profile.azimuth = 135, profile.length = units::set_units(10, "km"), crs = sf::st_crs("EPSG:26915"))
+profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(x), return.sf = TRUE) {
+  p1_trans <- sf::st_transform(start, crs = crs) |>
+    sf::st_coordinates()
+  a <- tectonicr:::tand(90 - profile.azimuth)
+  b <- p1_trans[1, 2] + p1_trans[1, 1] / a
+
+  if (sf::st_is_longlat(sf::st_transform(start, crs = crs))) {
+    if (!inherits(profile.length, "units")) warning("Unit of profile.length not specified. Assuming unit is in degrees.")
+    l <- units::set_units(profile.length, "degree") |>
+      units::drop_units()
+  } else {
+    if (!inherits(profile.length, "units")) warning("Unit of profile.length not specified. Assuming unit is in meters.")
+    l <- units::set_units(profile.length, "m") |>
+      units::drop_units()
+  }
+
+  end <- c(
+    X = p1_trans[1, 1] - tectonicr:::sind(90 - profile.azimuth) * l,
+    Y = p1_trans[1, 2] - tectonicr:::cosd(90 - profile.azimuth) * l
+  )
+  profile <- rbind(pq = p1_trans, end) |> as.data.frame(row.names = c("start", "end"), col.names = c("X", "Y"))
+  if (return.sf) {
+    profile |> sf::st_as_sf(coords = c("X", "Y"), crs = crs)
+  } else {
+    profile
+  }
+}
+
+#' Azimuth Between Profile Points
+#'
+#' @param profile `sf` point object. First point marks the start point.
+#'
+#' @importFrom sf st_coordinates
+#' @importFrom tectonicr get_azimuth
+#'
+#' @returns numeric. Azimuth in degrees
+#' @export
+#'
+#' @examples
+#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
+#'   profile_azimuth()
+profile_azimuth <- function(profile) {
+  profile_deg <- profile |>
+    sf::st_transform("WGS84") |>
+    sf::st_coordinates()
+  tectonicr::get_azimuth(profile_deg[1, 2], profile_deg[1, 1], profile_deg[2, 2], profile_deg[2, 1]) |>
+    units::set_units('degree')
+}
+
+#' Combine Points to a Line
+#'
+#' @param x `sf` point object
+#'
+#' @returns `sf` line object
+#' @export
+#' @importFrom sf st_combine st_cast
+#'
+#' @examples
+#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
+#'   profile_line()
+profile_line <- function(x) {
+  sf::st_combine(x) |>
+    sf::st_cast("LINESTRING")
+}
+
+#' Length of Profile
+#'
+#' @param x `sf` line object
+#' @param ... (optional) passed on to [s2::s2_distance()]
+#'
+#' @return units object when coordinate system is set.
+#' @importFrom sf st_length
+#' @export
+#'
+#' @examples
+#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
+#'   profile_line() |>
+#'   profile_length()
+profile_length <- function(x, ...) {
+  sf::st_length(x, ...)
+}
+
+
+#' @title Distance Between Points
+#' @description This uses the **haversine** formula (by default) to calculate the great-circle
+#' distance between two points, i.e., the shortest distance over the earth’s
+#' surface.
+#' @param a lon, lat coordinate of point 1
+#' @param b lon, lat coordinate of point 2
+#' @param ... parameters passed to [tectonicr::dist_greatcircle()]
+#' @return units object giving the distance
+#' @importFrom tectonicr dist_greatcircle
+#' @export
+#' @examples
+#' berlin <- c(52.517, 13.4)
+#' tokyo <- c(35.7, 139.767)
+#' point_distance(berlin, tokyo)
+point_distance <- function(a, b, ...) {
+  a_rad <- (pi / 180 * a)
+  b_rad <- (pi / 180 * b)
+
+  if (is.null(dim(a_rad))) {
+    a_rad <- t(a_rad)
+  }
+  if (is.null(dim(b_rad))) {
+    b_rad <- t(b_rad)
+  }
+
+  tectonicr::dist_greatcircle(a_rad[, 1], a_rad[, 2], b_rad[, 1], b_rad[, 2], ...) |>
+    units::set_units('km')
+}
+
+#' #' Distances in degree to kilometer
+#' #'
+#' #' Converts distances along a great circle path from degree into kilometer
+#' #'
+#' #' @param x numeric vector of distances in degree
+#' #' @param start,end start and end point as vectors with lon, lat
+#' #' @return units object
+#' #' @importFrom scales rescale
+#' #' @importFrom units set_units
+#' #' @export
+#' deg_2_km <- function(x, start, end) {
+#'   distance.km.total <- point_distance(start, end)
+#'   distances.km <- scales::rescale(x, to = c(0, distance.km.total))
+#'   units::set_units(distances.km, "km")
+#' }

@@ -155,47 +155,4 @@ swath_profile <- function(x) {
   return(elevs.df)
 }
 
-#' @title Distance
-#' @description This uses the **haversine** formula (by default) to calculate the great-circle
-#' distance between two points – that is, the shortest distance over the earth’s
-#' surface – giving an ‘as-the-crow-flies’ distance between the points
-#' (ignoring any hills they fly over, of course!).
-#' @param a lon, lat coordinate of point 1
-#' @param b lon, lat coordinate of point 2
-#' @param ... parameters passed to [tectonicr::dist_greatcircle()]
-#' @return distance in km
-#' @importFrom tectonicr dist_greatcircle
-#' @export
-#' @examples
-#' berlin <- c(52.517, 13.4)
-#' tokyo <- c(35.7, 139.767)
-#' greatcircle_distance(berlin, tokyo)
-greatcircle_distance <- function(a, b, ...) {
-  a_rad = (pi/180 * a)
-  b_rad = (pi/180 * b)
-
-  if(is.null(dim(a_rad))) {
-    a_rad <- t(a_rad)
-  }
-  if(is.null(dim(b_rad))) {
-    b_rad <- t(b_rad)
-  }
-
-  tectonicr::dist_greatcircle(a_rad[, 1], a_rad[, 2], b_rad[, 1], b_rad[, 2], ...)
-}
-
-#' Distances in degree to kilometer
-#'
-#' Converts distances along a great circle path from degree into kilometer
-#'
-#' @param x numeric vector of distances in degree
-#' @param start,end start and end point as vectors with lon, lat
-#' @return numeric vector
-#' @importFrom scales rescale
-#' @export
-deg_2_km <- function(x, start, end) {
-  distance.km.total <- greatcircle_distance(start, end)
-  distances.km <- scales::rescale(x, to = c(0, distance.km.total))
-  return(distances.km)
-}
 

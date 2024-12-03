@@ -1,0 +1,154 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(geoprofiler)
+library(ggplot2)
+library(units)
+```
+
+## Load example data
+
+For this tutorial we use the `quakes` dataset giving the locations of 1000 
+seismic events of MB > 4.0. The events occurred in a cube near Fiji since 1964.
+```{r load_data}
+data("quakes")
+```
+
+
+
+```{r map_data}
+data("quakes")
+
+quakes_sf <- sf::st_as_sf(quakes, coords = c("long", "lat"), crs = "WGS84") |> 
+  sf::st_wrap_dateline() |> 
+  sf::st_shift_longitude()
+
+quake_map <- ggplot() +
+  geom_sf(aes(color = depth, size = mag), data = quakes_sf) +
+  geom_sf(data = profile_l, lty = 2) +
+  scale_color_viridis_c() +
+  scale_size_binned() +
+  theme_classic() +
+  coord_sf(xlim = c(160, 195))
+```
+
+## Define a profile
+
+There are several ways to define a profile, depending on what is known or what is more relevant.
+
+### Profile from two known points
+For example, if the profile should be a line connecting two points:
+```{r}
+profile_pts <- data.frame(lon = c(160, -170), lat = c(-15, -30)) |> 
+  sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |> 
+  sf::st_shift_longitude() 
+```
+
+```{r}
+profile_l <- profile_line(profile_pts)
+```
+
+
+```{r}
+profile_azimuth(profile_l)
+profile_length(profile_l)
+```
+
+
+### Profile from direction and length from one point
+
+Or, if the orientation of the profile is more relevant, we can define the profile by the direction and distance from one point: 
+
+```{r}
+data.frame(lon = 160, lat = 15) |> 
+  sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |> 
+  sf::st_shift_longitude() |> 
+  profile_points(profile.azimuth = 124, profile.length = set_units(50, degree))
+```
+> Note that the unit of `profile.length` depends on the coordinate reference 
+system and must be in degree for lon-lat cooridnates and m (km, miles, ...) if 
+otherwise.
+
+
+Add the profile line to the map
+```{r}
+quake_map  +
+  geom_sf(data = profile_l, lty = 2) 
+```
+
+
+## Determine the distances along (and across) the profile
+
+To calculate the distances along and across the profile, we simply transform the 
+data into a cooridnate system of the profile line:
+```{r}
+quakes_profile <- project_on_line(quakes_sf, start = profile_pts[1, ], azimuth = profile_azimuth(profile_l)) |> 
+  bind_cols(quakes_sf)
+```
+
+The resulting data-frame gives the distance along the profile (`X`) and the 
+distance from the profile (`Y`). 
+
+A quick way to visualize the "transformed" data can be achieved by plotting 
+these axes against each other::
+
+```{r}
+quakes_profile |> 
+  ggplot(aes(X, Y, color = depth)) +
+  geom_hline(yintercept = 0) +
+  geom_point() +
+  scale_color_viridis_c() 
+```
+In this plot the profile line is a horizontal line (`X=0`). 
+
+This plot helps also allows to easily make a subset of our data to avoid plotting data points that are too far away from the profile:
+
+```{r}
+quakes_profile_filtered <- filter(quakes_profile, 
+         abs(Y) <= 10, 
+         X <= 7
+         )
+```
+
+
+## Plot data along profile
+Finally we plot our filtered data against the profile:
+```{r}
+ggplot(quakes_profile_filtered, aes(X, depth, color = depth, size = mag)) +
+  geom_point() +
+  scale_color_viridis_c('Depth (km)') +
+  scale_size_binned('Richter Magnitude') +
+  scale_y_reverse() +
+  scale_x_continuous(guide = guide_axis(position = "top")) +
+  labs(x = "Distance along profile (degree)", y = 'Depth (km)')
+```
+
+One way to show the distance from the profile in the same plot is by 
+controlling the size (and/or the opacity) of the points.
+Here I am using the unfiltered data, and show the closest points much larger than the more distant points.
+This gives a somewhat 3-dimensional look to it:
+
+```{r}
+ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +
+  geom_point() +
+  scale_color_viridis_c('Richter Magnitude', option = 'A') +
+  scale_size_continuous('Distance from profile (degree)', range = c(3, .1)) +
+  scale_alpha_continuous('Distance from profile (degree)', range = c(1, .1)) +
+  scale_y_reverse() +
+  scale_x_continuous(guide = guide_axis(position = "top")) +
+  labs(x = "Distance along profile (degree)", y = 'Depth (km)')
+```

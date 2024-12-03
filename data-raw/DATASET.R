@@ -1,6 +1,7 @@
 ## code to prepare `DATASET` dataset goes here
 
-locations_example <- readRDS("C:/Users/tstephan/Documents/Lakehead/Goldshore data/Data/goldshore_bh_samples.rds")
+locations_example <- readRDS("C:/Users/tstephan/Documents/Lakehead/Goldshore data/Data/goldshore_bh_samples.rds") |>
+  dplyr::slice_sample(n=500)
 locations_example$value <- runif(nrow(locations_example))
 locations_example$empty <- (!sf::st_is_empty(locations_example))
 
