@@ -40,7 +40,7 @@ my_data <- sf::read_sf('path/to/my/file.shp')
 ```
 
 
-For this tutorial we use the `quakes` dataset (from R's `datasets` package) 
+For this tutorial we use the `quakes` dataset (from R's `{datasets}` package) 
 giving the locations of 1000 
 seismic events of MB > 4.0. The events occurred in a cube near Fiji since 1964.
 ```{r load_data}

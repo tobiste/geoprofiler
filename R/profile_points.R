@@ -171,3 +171,28 @@ point_distance <- function(a, b, ...) {
 #'   distances.km <- scales::rescale(x, to = c(0, distance.km.total))
 #'   units::set_units(distances.km, "km")
 #' }
+
+
+#' Extract end points of a line
+#'
+#' @param x `sf` line object
+#'
+#' @returns `sf` point object
+#' @export
+#' @importFrom sf st_cast
+#'
+#' @examples
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1,
+#'   profile.azimuth = 135, profile.length = 10000,
+#'   crs = sf::st_crs("EPSG:26915")
+#' ) |>
+#'   profile_line() |>
+#'   line_ends()
+line_ends <- function(x){
+  x_pts <- sf::st_cast(x, "POINT")
+  start <- x_pts[1]
+  end <- x_pts[length(x_pts)]
+  c(start, end)
+}

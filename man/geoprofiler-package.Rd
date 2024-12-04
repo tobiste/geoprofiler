@@ -6,7 +6,7 @@
 \alias{geoprofiler-package}
 \title{geoprofiler: Distance Along Profile}
 \description{
-Measures distances along lines defined by a direction.
+Toolset to measures distances along lines defined by a direction or create swath profiles.
 }
 \seealso{
 Useful links:
