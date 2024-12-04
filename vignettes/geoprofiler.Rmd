@@ -35,18 +35,19 @@ options(ggplot2.continuous.fill = "viridis")
 
 You can use any spatial data that can be converted into a `sf` object.
 If you have a shape file for example, simply import it into R using the function 
-```{r read, eval=FALSE,echo=FALSE}
+```{r read, eval=FALSE, include=TRUE}
 my_data <- sf::read_sf('path/to/my/file.shp')
 ```
 
 
-For this tutorial we use the `quakes` dataset (from R's 'datasets` package) 
+For this tutorial we use the `quakes` dataset (from R's `datasets` package) 
 giving the locations of 1000 
 seismic events of MB > 4.0. The events occurred in a cube near Fiji since 1964.
 ```{r load_data}
 data("quakes")
-crs <- st_crs("EPSG:3460")
+crs <- st_crs("EPSG:3460") # coordinate reference system for projection
 
+# Convert to sf object and transform to  projected coordinates
 quakes_sf <- st_as_sf(quakes, coords = c("long", "lat"), crs = "WGS84") |>
   st_transform(crs = crs) 
 
@@ -70,8 +71,8 @@ is more relevant.
 For example, if the profile should be a line connecting two points:
 ```{r pts}
 profile_pts <- data.frame(lon = c(160, -170), lat = c(-15, -24)) |>
-  st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |>
-  st_transform(crs = crs)
+  st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |> # convert to sf object
+  st_transform(crs = crs)  # transform to projected coordinates
 ```
 
 Combine the two points to a line and add the profile line to the map:
@@ -119,7 +120,6 @@ The resulting data-frame gives the distance along the profile (`X`) and the
 distance from the profile (`Y`). 
 
 
-
 A quick way to visualize the "transformed" data can be achieved by plotting 
 these axes against each other::
 
@@ -144,8 +144,8 @@ of the profile has the coordinates `X=0` and `Y=0`.
 The location of the profile line can be easily shifted to the desired spot by 
 adjusting the `X` and `Y` values of the transformed data.
 
-For example, to shift the profile line more to the 'North', we simply subtract 
-the desired shift (to move it 'down', we would need to add the desired number).
+For example, to shift the profile line more to the "North", we simply subtract 
+the desired shift (to move it "down", we would need to add the desired number).
 
 ```{r shift}
 quakes_profile_shifted <- quakes_profile |> 
@@ -178,7 +178,7 @@ quakes_profile_filtered <- filter(
 
 ## Plot data along profile
 
-Finally we plot our filtered data against the profile:
+Finally, we plot our filtered data against the profile:
 
 ```{r profile_plot1}
 ggplot(quakes_profile_filtered, aes(X, depth, color = depth, size = mag)) +
@@ -197,7 +197,7 @@ This gives a somewhat 3-dimensional look to it:
 
 ```{r profile_plot2}
  quakes_profile_shifted |>
-   arrange(desc(abs(Y))) |>
+   arrange(desc(abs(Y))) |> # sort data to have close datapoints in foreground
    ggplot(aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +
    geom_point() +
    scale_color_viridis_c("Richter Magnitude", option = "A") +

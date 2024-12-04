@@ -13,14 +13,11 @@ The goal of geoprofiler is to get distances along and across
 user-defined profile lines or transects. This is useful when variables
 depend on distances.
 
-<figure>
-<img src="man/figures/fig.png"
-alt="Concept: geoprofiler applies a coordinate transformation of your geo-coordinates into “profile coordinates’. These coordinates are the distances along and across your profile." />
-<figcaption aria-hidden="true">Concept: geoprofiler applies a coordinate
-transformation of your geo-coordinates into “profile coordinates’. These
-coordinates are the distances along and across your
-profile.</figcaption>
-</figure>
+![](man/figures/fig.png)
+
+The concept of geoprofiler is a coordinate transformation of your
+geo-coordinates into “profile coordinates”. These coordinates are the
+distances along and across your profile.
 
 ## Installation
 

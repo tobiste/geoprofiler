@@ -21,9 +21,14 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-The goal of geoprofiler is to get distances along and across user-defined profile lines or transects. This is useful when variables depend on distances.
+The goal of geoprofiler is to get distances along and across user-defined 
+profile lines or transects. This is useful when variables depend on distances.
 
-![Concept: geoprofiler applies a coordinate transformation of your geo-coordinates into "profile coordinates'. These coordinates are the distances along and across your profile.](man/figures/fig.png)
+![](man/figures/fig.png)
+
+The concept of geoprofiler is a coordinate transformation of your 
+geo-coordinates into "profile coordinates". These coordinates are the 
+distances along and across your profile.
 
 ## Installation
 
@@ -82,7 +87,8 @@ ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))
   theme_classic()
 ```
 
-The above example uses the `quakes` dataset giving the locations of 1000 seismic events of MB \> 4.0. The events occurred in a cube near Fiji since 1964.
+The above example uses the `quakes` dataset giving the locations of 1000 seismic
+events of MB \> 4.0. The events occurred in a cube near Fiji since 1964.
 
 ## Documentation
 
@@ -94,7 +100,9 @@ Tobias Stephan ([tstephan\@lakeheadu.ca](mailto:tstephan@lakeheadu.ca){.email})
 
 ## Feedback, issues, and contributions
 
-I welcome feedback, suggestions, issues, and contributions! If you have found a bug, please file it [here](https://github.com/tobiste/geoprofiler/issues) with minimal code to reproduce the issue.
+I welcome feedback, suggestions, issues, and contributions! If you have found a 
+bug, please file it [here](https://github.com/tobiste/geoprofiler/issues) with 
+minimal code to reproduce the issue.
 
 ## License
 
