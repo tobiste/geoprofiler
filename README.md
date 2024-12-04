@@ -72,8 +72,11 @@ ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))
   theme_classic()
 ```
 
-<img src="man/figures/README-plot-1.png" width="100%" /> \##
-Documentation The detailed documentation can be found at
+<img src="man/figures/README-plot-1.png" width="100%" />
+
+## Documentation
+
+The detailed documentation can be found at
 <https://tobiste.github.io/geoprofiler/articles/geoprofiler.html>
 
 ## Author
