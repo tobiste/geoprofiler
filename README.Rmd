@@ -58,7 +58,7 @@ profile <- data.frame(lon = c(160, -170), lat = c(-15, -30)) |>
 
 Calculate the distances of all points along and across the profile line:
 ```{r cooridnates}
-quakes_profile <- project_on_line(quakes_sf, profile = profile) |>
+quakes_profile <- profile_coords(quakes_sf, profile = profile) |>
   dplyr::bind_cols(quakes_sf)
 ```
 

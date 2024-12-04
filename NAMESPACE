@@ -2,10 +2,10 @@
 
 export(point_distance)
 export(profile_azimuth)
+export(profile_coords)
 export(profile_length)
 export(profile_line)
 export(profile_points)
-export(project_on_line)
 export(swathR)
 export(swath_profile)
 importFrom(dplyr,as_tibble)

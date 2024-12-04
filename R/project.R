@@ -1,4 +1,4 @@
-#' Project points on cross section
+#' Profile Coordinates
 #'
 #' Project points on a cross section given by a starting point and the direction
 #'
@@ -9,7 +9,7 @@
 #' @param drop.units logical. Whether the return should show the units or not.
 #'
 #' @returns `"tibble"`. `X` is the distance along the profile line.
-#' `Y` is the distance from the profile line. (units of `X` and `Y` depend on
+#' `Y` is the distance across the profile line. (units of `X` and `Y` depend on
 #' coordinate reference system).
 #'
 #' @importFrom sf st_transform st_coordinates st_crs st_as_sf st_is_longlat st_geometry_type st_cast st_coordinates
@@ -18,14 +18,20 @@
 #' @importFrom structr vrotate
 #' @importFrom units set_units drop_units
 #'
+#' @author Tobias Stephan
+#'
 #' @export
 #'
 #' @examples
 #' data(locations_example)
-#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' projected <- project_on_line(locations_example, profile = p1, azimuth = 135)
-#' plot(projected)
-project_on_line <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_crds <- profile_coords(locations_example, profile = p1, azimuth = 135)
+#' head(profile_crds)
+#'
+#' # Plot the transformed coordinates
+#' plot(profile_crds)
+profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
   x2 <- st_transform(x, crs = "WGS84") |>
     st_coordinates() |>
     as_tibble() |>

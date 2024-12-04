@@ -18,7 +18,7 @@ units object giving the distance
 }
 \description{
 This uses the \strong{haversine} formula (by default) to calculate the great-circle
-distance between two points, i.e., the shortest distance over the earth’s
+distance between two points, i.e., the shortest distance over the earth<U+2019>s
 surface.
 }
 \examples{

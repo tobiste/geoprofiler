@@ -2,7 +2,7 @@
 % Please edit documentation in R/swath.R
 \name{swathR}
 \alias{swathR}
-\title{swathR v1.0.1}
+\title{Swath Profile}
 \usage{
 swathR(coords, raster, k, dist, crs, method)
 }

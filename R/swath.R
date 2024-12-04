@@ -1,11 +1,12 @@
-#' @title swathR v1.0.1
-#' @author V. Haburaj
-#' @description Calculate swath-profile values perpendicular to a straight baseline. The
+#' Swath Profile
+#'
+#' Calculate swath-profile values perpendicular to a straight baseline. The
 #' baseline is generated between two user-defined points (X|Y), see argument
 #' \code{coords}. The distance between samples and the number of samples can be
 #' specified, see arguments \code{k} and \code{dist}. Values of the swath-profile are
 #' extracted from a given raster file, see argument \code{raster}. CRS of raster
 #' and points have to be the same.
+#'
 #' @param coords matrix(ncol=2, nrow=2) with x and y coordinates of beginning and
 #' end point of the baseline; each point in one row
 #' \describe{
@@ -18,8 +19,12 @@
 #' @param crs string; CRS
 #' @param method string; method for extraction of raw data, see
 #' [raster::extract()]: default value: "bilinear"
+#'
 #' @importFrom sp SpatialPoints CRS
 #' @importFrom raster extract spLines
+#'
+#' @author V. Haburaj
+#'
 #' @export
 swathR <- function(coords, raster, k, dist, crs, method) {
   message("Initializing ...")
