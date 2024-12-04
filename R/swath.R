@@ -26,14 +26,12 @@
 #' @author V. Haburaj
 #'
 #' @export
-swathR <- function(coords, raster, k, dist, crs, method) {
-  message("Initializing ...")
-  # set default method:
-  if (missing(method)) {
-    method <- "bilinear"
-  }
+swathR <- function(coords, raster, k, dist, crs, method = 'bilinear') {
+  #message("Initializing ...")
+
   # create SpatialPoints from coords:
   spt <- SpatialPoints(coords, proj4string = CRS(crs))
+
   # get slope of baseline:
   m <- (ymin(spt[1]) - ymin(spt[2])) / (xmin(spt[1]) - xmin(spt[2]))
   # get slope of normal function:
@@ -134,7 +132,7 @@ swathR <- function(coords, raster, k, dist, crs, method) {
 #' @importFrom dplyr c_across rowwise ungroup mutate tibble as_tibble
 #' @export
 swath_profile <- function(x) {
-  elevs <- c()
+  elevs <- numeric()
   center <- as.character(median(seq_along(x$data)))
   for (i in seq_along(x$data)) {
     elevs <- cbind(elevs, x$data[[i]])

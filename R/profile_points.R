@@ -7,8 +7,8 @@
 #' @param profile.azimuth numeric. Direction of profile in degrees.
 #' @param profile.length units object.
 #' @param crs Coordinate reference system. Should be readable by [sf::st_crs()].
-#' @param return.sf logical. Should the profile points be returned as a 'sf'
-#' ('TRUE', the default) object or as a data.frame.
+#' @param return.sf logical. Should the profile points be returned as a `sf`
+#' object (`TRUE`, the default) object or as a data.frame.
 #'
 #' @note
 #' Use metric values (meters, kilometers, etc) in case of a projected coordinate reference frame, and degree
@@ -126,9 +126,11 @@ profile_length <- function(x, ...) {
 
 
 #' @title Distance Between Points
-#' @description This uses the **haversine** formula (by default) to calculate the great-circle
-#' distance between two points, i.e., the shortest distance over the earth<U+2019>s
-#' surface.
+#'
+#' @description This uses the **haversine** formula (by default) to calculate
+#' the great-circle distance between two points, i.e., the shortest distance
+#' over the earth's surface.
+#'
 #' @param a lon, lat coordinate of point 1
 #' @param b lon, lat coordinate of point 2
 #' @param ... parameters passed to [tectonicr::dist_greatcircle()]

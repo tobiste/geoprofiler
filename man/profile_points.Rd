@@ -21,8 +21,8 @@ profile_points(
 
 \item{crs}{Coordinate reference system. Should be readable by \code{\link[sf:st_crs]{sf::st_crs()}}.}
 
-\item{return.sf}{logical. Should the profile points be returned as a 'sf'
-('TRUE', the default) object or as a data.frame.}
+\item{return.sf}{logical. Should the profile points be returned as a \code{sf}
+object (\code{TRUE}, the default) object or as a data.frame.}
 }
 \value{
 class depends on \code{return.sf}.

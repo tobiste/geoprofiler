@@ -12,6 +12,7 @@ Measures distances along lines defined by a direction.
 Useful links:
 \itemize{
   \item \url{https://tobiste.github.io/geoprofiler/}
+  \item Report bugs at \url{https://github.com/tobiste/geoprofiler/issues}
 }
 
 }
