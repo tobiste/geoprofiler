@@ -14,8 +14,12 @@ user-defined profile lines or transects. This is useful when variables
 depend on distances.
 
 <figure>
-<img src="man/figures/fig.png" alt="Concept" />
-<figcaption aria-hidden="true">Concept</figcaption>
+<img src="man/figures/fig.png"
+alt="Concept: geoprofiler applies a coordinate transformation of your geo-coordinates into “profile coordinates’. These coordinates are the distances along and across your profile." />
+<figcaption aria-hidden="true">Concept: geoprofiler applies a coordinate
+transformation of your geo-coordinates into “profile coordinates’. These
+coordinates are the distances along and across your
+profile.</figcaption>
 </figure>
 
 ## Installation

@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 The goal of geoprofiler is to get distances along and across user-defined profile lines or transects. This is useful when variables depend on distances.
 
-![Concept](man/figures/fig.png)
+![Concept: geoprofiler applies a coordinate transformation of your geo-coordinates into "profile coordinates'. These coordinates are the distances along and across your profile.](man/figures/fig.png)
 
 ## Installation
 
