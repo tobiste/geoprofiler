@@ -55,7 +55,8 @@ with units such as m, km, miles etc. Otherwise the units will be in degrees.
 
 ## Define a profile
 
-There are several ways to define a profile, depending on what is known or what is more relevant.
+There are several ways to define a profile, depending on what is known or what 
+is more relevant.
 
 ### Profile from two known points
 For example, if the profile should be a line connecting two points:
@@ -83,7 +84,8 @@ profile_length(profile_l)
 
 ### Profile from direction and length from one point
 
-Or, if the orientation of the profile is more relevant, we can define the profile by the direction and distance from one point: 
+Or, if the orientation of the profile is more relevant, we can define the 
+profile by the direction and distance from one point: 
 
 ```{r azimuth, warning=FALSE, message=FALSE}
 data.frame(lon = 160, lat = 15) |>
@@ -94,8 +96,6 @@ data.frame(lon = 160, lat = 15) |>
 > Note that the unit of `profile.length` depends on the coordinate reference 
 system and must be in degree for lon-lat cooridnates and m (km, miles, ...) if 
 otherwise.
-
-
 
 
 ## Determine the distances along (and across) the profile
@@ -124,7 +124,8 @@ quakes_profile |>
 ```
 In this plot the profile line is a horizontal line (`X=0`). 
 
-This plot helps also allows to easily make a subset of our data to avoid plotting data points that are too far away from the profile:
+This plot helps also allows to easily make a subset of our data to avoid 
+plotting data points that are too far away from the profile:
 
 ```{r filter}
 quakes_profile_filtered <- filter(
@@ -148,16 +149,20 @@ ggplot(quakes_profile_filtered, aes(X/1000, depth, color = depth, size = mag)) +
 
 One way to show the distance from the profile in the same plot is by 
 controlling the size (and/or the opacity) of the points.
-Here I am using the unfiltered data, and show the closest points much larger than the more distant points.
+Here I am using the unfiltered data, and show the closest points much larger 
+than the more distant points.
 This gives a somewhat 3-dimensional look to it:
 
 ```{r profile_plot2}
-ggplot(quakes_profile, aes(X/1000, depth, color = mag, size = abs(Y)/1000, alpha = abs(Y)/1000)) +
-  geom_point() +
-  scale_color_viridis_c("Richter Magnitude", option = "A") +
-  scale_size_continuous("Distance from profile (km)", range = c(3, .1)) +
-  scale_alpha_continuous("Distance from profile (km)", range = c(1, .1)) +
-  scale_y_reverse() +
-  scale_x_continuous(guide = guide_axis(position = "top")) +
-  labs(x = "Distance along profile (km)", y = "Depth (km)")
+ quakes_profile |>
+   arrange(desc(abs(Y))) |>
+   ggplot(aes(X / 1000, depth, color = mag, size = abs(Y) / 1000, alpha = abs(Y) / 1000)) +
+   geom_point() +
+   scale_color_viridis_c("Richter Magnitude", option = "A") +
+   scale_size_continuous("Distance from profile (km)", range = c(3, .1)) +
+   scale_alpha_continuous("Distance from profile (km)", range = c(1, .1)) +
+   scale_y_reverse() +
+   scale_x_continuous(guide = guide_axis(position = "top")) +
+   labs(x = "Distance along profile (km)", y = "Depth (km)") +
+   coord_cartesian(expand = FALSE)
 ```

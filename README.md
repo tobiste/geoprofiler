@@ -24,7 +24,7 @@ devtools::install_github("tobiste/geoprofiler")
 
 ## Example
 
-This is a basic example which shows you how to create a profile
+This is a basic example which shows you how to create a profile.
 
 ``` r
 library(geoprofiler)
@@ -72,4 +72,21 @@ ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))
   theme_classic()
 ```
 
-<img src="man/figures/README-plot-1.png" width="100%" />
+<img src="man/figures/README-plot-1.png" width="100%" /> \##
+Documentation The detailed documentation can be found at
+<https://tobiste.github.io/geoprofiler/articles/geoprofiler.html>
+
+## Author
+
+Tobias Stephan (<tstephan@lakeheadu.ca>)
+
+## Feedback, issues, and contributions
+
+I welcome feedback, suggestions, issues, and contributions! If you have
+found a bug, please file it
+[here](https://github.com/tobiste/geoprofiler/issues) with minimal code
+to reproduce the issue.
+
+## License
+
+MIT License
