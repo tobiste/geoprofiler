@@ -138,12 +138,12 @@ quakes_profile_filtered <- filter(
 ## Plot data along profile
 Finally we plot our filtered data against the profile:
 ```{r profile_plot1}
-ggplot(quakes_profile_filtered, aes(X, depth, color = depth, size = mag)) +
+ggplot(quakes_profile_filtered, aes(X/1000, depth, color = depth, size = mag)) +
   geom_point() +
   scale_size_binned("Richter Magnitude") +
   scale_y_reverse() +
   scale_x_continuous(guide = guide_axis(position = "top")) +
-  labs(x = "Distance along profile (m)", y = "Depth (km)", color = "Depth (km)")
+  labs(x = "Distance along profile (km)", y = "Depth (km)", color = "Depth (km)")
 ```
 
 One way to show the distance from the profile in the same plot is by 
@@ -152,12 +152,12 @@ Here I am using the unfiltered data, and show the closest points much larger tha
 This gives a somewhat 3-dimensional look to it:
 
 ```{r profile_plot2}
-ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +
+ggplot(quakes_profile, aes(X/1000, depth, color = mag, size = abs(Y)/1000, alpha = abs(Y)/1000)) +
   geom_point() +
   scale_color_viridis_c("Richter Magnitude", option = "A") +
-  scale_size_continuous("Distance from profile (degree)", range = c(3, .1)) +
-  scale_alpha_continuous("Distance from profile (degree)", range = c(1, .1)) +
+  scale_size_continuous("Distance from profile (km)", range = c(3, .1)) +
+  scale_alpha_continuous("Distance from profile (km)", range = c(1, .1)) +
   scale_y_reverse() +
   scale_x_continuous(guide = guide_axis(position = "top")) +
-  labs(x = "Distance along profile (m)", y = "Depth (km)")
+  labs(x = "Distance along profile (km)", y = "Depth (km)")
 ```

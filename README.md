@@ -28,14 +28,6 @@ This is a basic example which shows you how to create a profile
 
 ``` r
 library(geoprofiler)
-#> The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
-#> which was just loaded, will retire in October 2023.
-#> Please refer to R-spatial evolution reports for details, especially
-#> https://r-spatial.org/r/2023/05/15/evolution4.html.
-#> It may be desirable to make the sf package available;
-#> package maintainers should consider adding sf to Suggests:.
-#> The sp package is now running under evolution status 2
-#>      (status 2 uses the sf package in place of rgdal)
 library(ggplot2)
 #> Warning: package 'ggplot2' was built under R version 4.3.3
 ```

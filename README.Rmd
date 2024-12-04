@@ -74,5 +74,3 @@ ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))
   labs(x = bquote("Distance along profile (" * degree * ")"), y = "Depth (km)") +
   theme_classic()
 ```
-
-
