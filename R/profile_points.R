@@ -3,8 +3,8 @@
 #' Create a end point along a profile line starting at a point with a defined
 #' direction and length.
 #'
-#' @param x `sf` point object.
-#' @param azimuth numeric. Direction of profile in degrees.
+#' @param start `sf` point object.
+#' @param profile.azimuth numeric. Direction of profile in degrees.
 #' @param profile.length units object.
 #' @param crs Coordinate reference system. Should be readable by [sf::st_crs()].
 #' @param return.sf logical. Should the profile points be returned as a 'sf'
@@ -20,8 +20,12 @@
 #' @importFrom units set_units drop_units
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' profile_points(p1, profile.azimuth = 135, profile.length = units::set_units(10, "km"), crs = sf::st_crs("EPSG:26915"))
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1,
+#'   profile.azimuth = 135, profile.length = units::set_units(10, "km"),
+#'   crs = sf::st_crs("EPSG:26915")
+#' )
 profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(start), return.sf = TRUE) {
   p1_trans <- st_transform(start, crs = crs) |>
     st_coordinates()
@@ -61,8 +65,13 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #' @export
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#'
+#' profile_points(p1,
+#'   profile.azimuth = 135, profile.length = 10000,
+#'   crs = sf::st_crs("EPSG:26915")
+#' ) |>
 #'   profile_azimuth()
 profile_azimuth <- function(profile) {
   profile_deg <- profile |>
@@ -81,8 +90,12 @@ profile_azimuth <- function(profile) {
 #' @importFrom sf st_combine st_cast
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1,
+#'   profile.azimuth = 135, profile.length = 10000,
+#'   crs = sf::st_crs("EPSG:26915")
+#' ) |>
 #'   profile_line()
 profile_line <- function(x) {
   sf::st_combine(x) |>
@@ -99,8 +112,12 @@ profile_line <- function(x) {
 #' @export
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1,
+#'   profile.azimuth = 135, profile.length = 10000,
+#'   crs = sf::st_crs("EPSG:26915")
+#' ) |>
 #'   profile_line() |>
 #'   profile_length()
 profile_length <- function(x, ...) {

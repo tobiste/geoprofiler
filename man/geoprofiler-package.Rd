@@ -4,7 +4,7 @@
 \name{geoprofiler-package}
 \alias{geoprofiler}
 \alias{geoprofiler-package}
-\title{geoprofiler: Distances Along Profile}
+\title{geoprofiler: Distance Along Profile}
 \description{
 Measures distances along lines defined by a direction.
 }

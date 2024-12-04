@@ -32,6 +32,7 @@
 #' # Plot the transformed coordinates
 #' plot(profile_crds)
 profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
+  X <- Y <- numeric()
   x2 <- st_transform(x, crs = "WGS84") |>
     st_coordinates() |>
     as_tibble() |>

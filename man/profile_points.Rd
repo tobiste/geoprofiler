@@ -13,16 +13,16 @@ profile_points(
 )
 }
 \arguments{
+\item{start}{\code{sf} point object.}
+
+\item{profile.azimuth}{numeric. Direction of profile in degrees.}
+
 \item{profile.length}{units object.}
 
 \item{crs}{Coordinate reference system. Should be readable by \code{\link[sf:st_crs]{sf::st_crs()}}.}
 
 \item{return.sf}{logical. Should the profile points be returned as a 'sf'
 ('TRUE', the default) object or as a data.frame.}
-
-\item{x}{\code{sf} point object.}
-
-\item{azimuth}{numeric. Direction of profile in degrees.}
 }
 \value{
 class depends on \code{return.sf}.
@@ -36,6 +36,8 @@ Use metric values (meters, kilometers, etc) in case of a projected coordinate re
 when geographical coordinate reference frame.
 }
 \examples{
-p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-profile_points(p1, profile.azimuth = 135, profile.length = units::set_units(10, "km"), crs = sf::st_crs("EPSG:26915"))
+p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+  sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+profile_points(p1, profile.azimuth = 135, profile.length = units::set_units(10, "km"),
+  crs = sf::st_crs("EPSG:26915"))
 }

@@ -1,5 +1,5 @@
 Package: geoprofiler
-Title: Distances Along Profile
+Title: Distance Along Profile
 Version: 0.0.0.9000
 Authors@R: 
     person("Tobias", "Stephan", , "tobias.stephan1@yahoo.com", role = c("aut", "cre"),
@@ -10,12 +10,10 @@ Depends:
     R (>= 4.0)
 Imports: 
     dplyr,
-    raster,
-    scales,
     sf,
-    sp,
     structr,
-    tectonicr
+    tectonicr,
+    units
 Remotes: 
     tobiste/structr
 Encoding: UTF-8
