@@ -14,17 +14,15 @@ Depends:
 Imports: 
     dplyr,
     sf,
-    structr,
     tectonicr,
     terra,
     units
 Suggests: 
+    ggplot2
     knitr,
     rmarkdown
 VignetteBuilder: 
     knitr
-Remotes: 
-    tobiste/structr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

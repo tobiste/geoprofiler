@@ -76,7 +76,7 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
       drop_units()
   }
 
-  n <- structr::vrotate(vec, rotaxis = rot, rotangle = deg2rad(azimuth + 90 + 180))
+  n <- vrotate(vec, rotaxis = rot, rotangle = deg2rad(azimuth + 90 + 180))
   r <- sqrt(n[, 1]^2 + n[, 2]^2 + n[, 3]^2)
   lat2 <- asin(n[, 3] / r) # lat
   lon2 <- atan2(n[, 2], n[, 1])
