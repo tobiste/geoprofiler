@@ -73,17 +73,17 @@ by Vincent Haburaj (https://github.com/jjvhab/swathR).</p>
 <dl><dt id="arg-profile">profile<a class="anchor" aria-label="anchor" href="#arg-profile"></a></dt>
 <dd><p>either a <code>sf</code> object or a matrix(ncol=2, nrow=2) with x and
 y coordinates of beginning and end point of the baseline; each point in one row</p><dl><dt>column 1</dt>
-<dd><p>x coordinates</p></dd>
+<dd><p>x coordinates (or longitudes)</p></dd>
 
 <dt>column 2</dt>
-<dd><p>y coordinates</p></dd>
+<dd><p>y coordinates (latitudes)</p></dd>
 
 
 </dl></dd>
 
 
 <dt id="arg-raster">raster<a class="anchor" aria-label="anchor" href="#arg-raster"></a></dt>
-<dd><p>Raster file (loaded with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>)</p></dd>
+<dd><p>Raster file (<code>"SpatRaster"</code> object as loaded by <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>)</p></dd>
 
 
 <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
@@ -95,13 +95,13 @@ y coordinates of beginning and end point of the baseline; each point in one row<
 
 
 <dt id="arg-crs">crs<a class="anchor" aria-label="anchor" href="#arg-crs"></a></dt>
-<dd><p>character. coordinate reference system. Uses the CRS of <code>raster</code>
-by default and transforms the profile into this coordinate system.</p></dd>
+<dd><p>character. coordinate reference system. Both the <code>raster</code> and the
+<code>profile</code> are transformed into this CRS. Uses the CRS of <code>raster</code> by default.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>character. method for extraction of raw data, see
-<code><a href="https://rspatial.github.io/terra/reference/extract.html" class="external-link">terra::extract()</a></code>: default value: "bilinear"</p></dd>
+<code><a href="https://rspatial.github.io/terra/reference/extract.html" class="external-link">terra::extract()</a></code>: default value: <code>"bilinear"</code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -113,7 +113,7 @@ by default and transforms the profile into this coordinate system.</p></dd>
 <dd><p>list of numeric vector containing the data extracted from the raster along each line</p></dd>
 
 <dt><code>lines</code></dt>
-<dd><p>list of of the lines as SpatVectors</p></dd>
+<dd><p>list of of the lines as <code>"SpatVector"</code> objects</p></dd>
 
 
 </dl></div>
@@ -126,14 +126,90 @@ by default and transforms the profile into this coordinate system.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create a random raster</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">10</span>, nrow <span class="op">=</span> <span class="fl">10</span>, xmin <span class="op">=</span> <span class="op">-</span><span class="fl">150</span>, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">80</span>, ymin <span class="op">=</span> <span class="fl">20</span>, ymax <span class="op">=</span> <span class="fl">60</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">values</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">ncell</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in values(r) &lt;- runif(terra::ncell(r)):</span> could not find function "values&lt;-"</span>
+<span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/values.html" class="external-link">values</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">ncell</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Create a random profile</span></span></span>
 <span class="r-in"><span><span class="va">profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">140</span>, <span class="op">-</span><span class="fl">90</span><span class="op">)</span>, lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">swath_extract</span><span class="op">(</span><span class="va">profile</span>, <span class="va">r</span>, k <span class="op">=</span> <span class="fl">2</span>, dist <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [extract] raster has no values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $swath</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      distance      mean    median  std.dev.       min       max quantile(25)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]       -2 0.5188714 0.5354328 0.1226090 0.2986234 0.7434251    0.4610370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]       -1 0.5193847 0.5047430 0.1157125 0.2986234 0.7434251    0.4610370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]        0 0.4861382 0.4843019 0.1315223 0.2613481 0.7434251    0.4053778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]        1 0.4729833 0.4900782 0.1175709 0.2613481 0.6733179    0.3944666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]        2 0.4590701 0.4745807 0.1073198 0.2613481 0.6733179    0.4035579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      quantile(75)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    0.5807059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0.5776294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0.5411026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]    0.5409959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]    0.5320362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5367092 0.4990050 0.4435484 0.3726443 0.3382311 0.5542827 0.4785257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2986234 0.6733179 0.6009761 0.5354328 0.6431701 0.5604357 0.5047430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.7434251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5367092 0.4990050 0.4435484 0.3726443 0.4900782 0.5542827 0.4785257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2986234 0.6733179 0.6009761 0.5354328 0.6431701 0.4162889 0.5047430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.7434251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5367092 0.4745807 0.4435484 0.3726443 0.4900782 0.5542827 0.4785257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2986234 0.6733179 0.3514926 0.5354328 0.6431701 0.4162889 0.5047430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.7434251 0.2613481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4745807 0.4435484 0.3726443 0.4900782 0.5542827 0.5465590 0.2986234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.6733179 0.3514926 0.5354328 0.6431701 0.4162889 0.5047430 0.5286397</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.2613481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4745807 0.4435484 0.4067186 0.4900782 0.5542827 0.5465590 0.2986234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.6733179 0.3514926 0.5354328 0.4003972 0.4162889 0.5047430 0.5286397</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.2613481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lines</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -138.971, -88.97101, 26.71499, 56.71499  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[2]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -139.4855, -89.4855, 25.85749, 55.85749  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[3]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -140, -90, 25, 55  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[4]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -140.5145, -90.5145, 24.14251, 54.14251  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[5]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -141.029, -91.02899, 23.28501, 53.28501  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
