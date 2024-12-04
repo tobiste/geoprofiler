@@ -54,7 +54,15 @@ direction and length.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-profile-length">profile.length<a class="anchor" aria-label="anchor" href="#arg-profile-length"></a></dt>
+<dl><dt id="arg-start">start<a class="anchor" aria-label="anchor" href="#arg-start"></a></dt>
+<dd><p><code>sf</code> point object.</p></dd>
+
+
+<dt id="arg-profile-azimuth">profile.azimuth<a class="anchor" aria-label="anchor" href="#arg-profile-azimuth"></a></dt>
+<dd><p>numeric. Direction of profile in degrees.</p></dd>
+
+
+<dt id="arg-profile-length">profile.length<a class="anchor" aria-label="anchor" href="#arg-profile-length"></a></dt>
 <dd><p>units object.</p></dd>
 
 
@@ -65,14 +73,6 @@ direction and length.</p>
 <dt id="arg-return-sf">return.sf<a class="anchor" aria-label="anchor" href="#arg-return-sf"></a></dt>
 <dd><p>logical. Should the profile points be returned as a 'sf'
 ('TRUE', the default) object or as a data.frame.</p></dd>
-
-
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p><code>sf</code> point object.</p></dd>
-
-
-<dt id="arg-azimuth">azimuth<a class="anchor" aria-label="anchor" href="#arg-azimuth"></a></dt>
-<dd><p>numeric. Direction of profile in degrees.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -87,16 +87,18 @@ when geographical coordinate reference frame.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="op">-</span><span class="fl">90.8</span>, lat <span class="op">=</span> <span class="fl">48.6</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">profile_points</span><span class="op">(</span><span class="va">p1</span>, profile.azimuth <span class="op">=</span> <span class="fl">135</span>, profile.length <span class="op">=</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"km"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">"EPSG:26915"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="op">-</span><span class="fl">90.8</span>, lat <span class="op">=</span> <span class="fl">48.6</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">profile_points</span><span class="op">(</span><span class="va">p1</span>, profile.azimuth <span class="op">=</span> <span class="fl">135</span>, profile.length <span class="op">=</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"km"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">"EPSG:26915"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 662193.6 ymin: 5378256 xmax: 669264.7 ymax: 5385327</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 662193.2 ymin: 5378256 xmax: 669264.3 ymax: 5385328</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 POINT (662193.6 5385327)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 POINT (669264.7 5378256)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 POINT (662193.2 5385328)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 POINT (669264.3 5378256)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
