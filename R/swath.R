@@ -1,13 +1,12 @@
 #' Swath Profile
 #'
-#' Calculate swath-profile values perpendicular to a straight baseline. The
-#' baseline is generated between two user-defined points (X|Y), see argument
-#' \code{coords}. The distance between samples and the number of samples can be
+#' Calculate swath-profile values perpendicular to a straight baseline.
+#' The distance between samples and the number of samples can be
 #' specified, see arguments \code{k} and \code{dist}. Values of the swath-profile are
 #' extracted from a given raster file, see argument \code{raster}. CRS of raster
 #' and points have to be the same.
 #'
-#' @param coords either a `sf` object or a matrix(ncol=2, nrow=2) with x and
+#' @param profile either a `sf` object or a matrix(ncol=2, nrow=2) with x and
 #' y coordinates of beginning and end point of the baseline; each point in one row
 #' \describe{
 #'   \item{column 1}{x coordinates}
@@ -16,7 +15,8 @@
 #' @param raster Raster file (loaded with [terra::rast()])
 #' @param k integer. number of lines on each side of the baseline
 #' @param dist numeric. distance between lines
-#' @param crs character. coordinate reference system.
+#' @param crs character. coordinate reference system. Uses the CRS of `raster`
+#' by default and transforms the profile into this coordinate system.
 #' @param method character. method for extraction of raw data, see
 #' [terra::extract()]: default value: "bilinear"
 #'
@@ -39,29 +39,28 @@
 #'
 #' @examples
 #' # Create a random raster
-#' r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60)
+#' r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60, crs = "WGS84")
 #' values(r) <- runif(terra::ncell(r))
 #'
 #' # Create a random profile
 #' profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
 #'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 #' swath_extract(profile, r, k = 2, dist = 1)
-swath_extract <- function(coords, raster, k = 1, dist, crs = "EPSG:4326", method = c("bilinear", "simple")) {
-  # message("Initializing ...")
+swath_extract <- function(profile, raster, k = 1, dist, crs = terra::crs(raster), method = c("bilinear", "simple")) {
   method <- match.arg(method)
+  raster <- terra::project(raster, crs)
 
-  if (inherits(coords, "sf") & all(sf::st_geometry_type(coords) == "LINESTRING")) {
-    coords <- line_ends(coords)
+  if (inherits(profile, "sf") & all(sf::st_geometry_type(profile) == "LINESTRING")) {
+    profile <- line_ends(profile)
   }
 
   # create SpatialPoints from coords:
-  # spt <- SpatialPoints(coords, proj4string = CRS(crs))
-  if (!inherits(coords, "sf") & is.matrix(coords)) {
-    coords <- sf::st_point(coords) |> sf::st_set_crs(crs)
+  if (!inherits(profile, "sf") & is.matrix(profile)) {
+    profile <- sf::st_point(profile) |> sf::st_set_crs(crs)
   }
-  coords_mat <- sf::st_coordinates(coords)
+  coords_mat <- sf::st_coordinates(profile)
 
-  spt <- sf::st_transform(coords, crs = sf::st_crs(crs)) |> terra::vect()
+  spt <- sf::st_transform(profile, crs = sf::st_crs(crs)) |> terra::vect()
 
   # get slope of baseline:
   m <- (terra::ymin(spt[1]) - terra::ymin(spt[2])) / (terra::xmin(spt[1]) - terra::xmin(spt[2]))
@@ -90,7 +89,7 @@ swath_extract <- function(coords, raster, k = 1, dist, crs = "EPSG:4326", method
   # list for spatial lines:
   allLines <- list()
   # add baseline:
-  allLines[[k + 1]] <- terra::vect(coords) |> terra::as.lines()
+  allLines[[k + 1]] <- terra::vect(profile) |> terra::as.lines()
   # set distance for baseline:
   swath[k + 1, 1] <- 0
   # generate k lines parallel to baseline:
@@ -120,15 +119,12 @@ swath_extract <- function(coords, raster, k = 1, dist, crs = "EPSG:4326", method
   lines_extent <- terra::vect(allLines) |> terra::ext()
   raster_expanded <- terra::extend(raster, lines_extent)
 
-  # gc(verbose = FALSE)
   # get raw data:
-  # message("Extracting raw data (this may take some time) ...")
   raw.data <- sapply(allLines, FUN = function(x) {
     terra::extract(raster_expanded, x, method = method, ID = FALSE)
   })
-  # gc(verbose = FALSE)
+
   # generalise data:
-  # message("Generalising data ...")
   swath[, 2] <- sapply(raw.data, function(x) {
     mean(x, na.rm = T)
   })
@@ -150,12 +146,8 @@ swath_extract <- function(coords, raster, k = 1, dist, crs = "EPSG:4326", method
   swath[, 8] <- sapply(raw.data, function(x) {
     quantile(x, na.rm = T)[4]
   })
-  # return results:
-  results <- list(swath = swath, data = raw.data, lines = allLines)
-  # message("Operation finished successfully!")
-  # message('Structure of results (list): "swath": swath profile data (matrix, numeric), "data": raw data (list, numeric), "lines": generated lines (list, spLines)')
-  # gc(verbose = FALSE)
-  return(results)
+
+  list(swath = swath, data = raw.data, lines = allLines)
 }
 
 

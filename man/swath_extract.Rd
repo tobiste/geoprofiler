@@ -9,16 +9,16 @@ by Vincent Haburaj (https://github.com/jjvhab/swathR).
 }
 \usage{
 swath_extract(
-  coords,
+  profile,
   raster,
   k = 1,
   dist,
-  crs = "EPSG:4326",
+  crs = terra::crs(raster),
   method = c("bilinear", "simple")
 )
 }
 \arguments{
-\item{coords}{either a \code{sf} object or a matrix(ncol=2, nrow=2) with x and
+\item{profile}{either a \code{sf} object or a matrix(ncol=2, nrow=2) with x and
 y coordinates of beginning and end point of the baseline; each point in one row
 \describe{
 \item{column 1}{x coordinates}
@@ -31,7 +31,8 @@ y coordinates of beginning and end point of the baseline; each point in one row
 
 \item{dist}{numeric. distance between lines}
 
-\item{crs}{character. coordinate reference system.}
+\item{crs}{character. coordinate reference system. Uses the CRS of \code{raster}
+by default and transforms the profile into this coordinate system.}
 
 \item{method}{character. method for extraction of raw data, see
 \code{\link[terra:extract]{terra::extract()}}: default value: "bilinear"}
@@ -45,16 +46,15 @@ list.
 }
 }
 \description{
-Calculate swath-profile values perpendicular to a straight baseline. The
-baseline is generated between two user-defined points (X|Y), see argument
-\code{coords}. The distance between samples and the number of samples can be
+Calculate swath-profile values perpendicular to a straight baseline.
+The distance between samples and the number of samples can be
 specified, see arguments \code{k} and \code{dist}. Values of the swath-profile are
 extracted from a given raster file, see argument \code{raster}. CRS of raster
 and points have to be the same.
 }
 \examples{
 # Create a random raster
-r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60)
+r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60, crs = "WGS84")
 values(r) <- runif(terra::ncell(r))
 
 # Create a random profile
