@@ -3,15 +3,16 @@
 #' Project points on a cross section given by a starting point and the direction
 #'
 #' @param x `'sf'` object
-#' @param start `'sf'` object of profile starting point
-#' @param azi numeric. Direction (in degrees) emanating from starting point.
+#' @param profile `'sf'` object of the profile or the profile's starting point.
+#' @param azimuth numeric. Direction (in degrees) emanating from starting point.
+#' Is ignored when `profile` contains two points or is a `LINESTRING`.
 #' @param drop.units logical. Whether the return should show the units or not.
 #'
 #' @returns `"tibble"`. `X` is the distance along the profile line.
 #' `Y` is the distance from the profile line. (units of `X` and `Y` depend on
 #' coordinate reference system).
 #'
-#' @importFrom sf st_transform st_coordinates st_crs st_as_sf st_is_longlat
+#' @importFrom sf st_transform st_coordinates st_crs st_as_sf st_is_longlat st_geometry_type st_cast st_coordinates
 #' @importFrom dplyr mutate mutate_all as_tibble tibble
 #' @importFrom tectonicr deg2rad rad2deg
 #' @importFrom structr vrotate
@@ -22,9 +23,9 @@
 #' @examples
 #' data(locations_example)
 #' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' projected <- project_on_line(locations_example, start = p1, azimuth = 135)
+#' projected <- project_on_line(locations_example, profile = p1, azimuth = 135)
 #' plot(projected)
-project_on_line <- function(x, start, azimuth, drop.units = TRUE) {
+project_on_line <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
   x2 <- st_transform(x, crs = "WGS84") |>
     st_coordinates() |>
     as_tibble() |>
@@ -39,13 +40,17 @@ project_on_line <- function(x, start, azimuth, drop.units = TRUE) {
   vec[, 2] <- x2$R * cos(x2$lat_rad) * sin(x2$lon_rad)
   vec[, 3] <- x2$R * sin(x2$lat_rad)
 
-  p <- start |>
+  if (all(st_geometry_type(profile) == "LINESTRING")) {
+    profile <- profile |> st_cast("POINT")
+  }
+
+  p <- profile[1, ] |>
     st_transform(crs = "WGS84") |>
     st_coordinates() |>
     as_tibble() |>
     mutate_all(deg2rad)
 
-  p1_coords <- start |>
+  p1_coords <- profile[1, ] |>
     st_transform(crs = st_crs(x)) |>
     st_coordinates()
 
@@ -54,6 +59,10 @@ project_on_line <- function(x, start, azimuth, drop.units = TRUE) {
   rot[, 1] <- p1r * cos(p$Y) * cos(p$X)
   rot[, 2] <- p1r * cos(p$Y) * sin(p$X)
   rot[, 3] <- p1r * sin(p$Y)
+
+  if (nrow(st_coordinates(profile)) == 2 & all(st_geometry_type(profile) == "POINT")) {
+    azimuth <- profile_azimuth(profile)
+  }
 
   if (inherits(azimuth, "units")) {
     azimuth <- set_units(azimuth, "degree") |>

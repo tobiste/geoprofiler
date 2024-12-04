@@ -20,11 +20,11 @@
 #' @importFrom units set_units drop_units
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 #' profile_points(p1, profile.azimuth = 135, profile.length = units::set_units(10, "km"), crs = sf::st_crs("EPSG:26915"))
-profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(x), return.sf = TRUE) {
-  p1_trans <- sf::st_transform(start, crs = crs) |>
-    sf::st_coordinates()
+profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(start), return.sf = TRUE) {
+  p1_trans <- st_transform(start, crs = crs) |>
+    st_coordinates()
   a <- tectonicr:::tand(90 - profile.azimuth)
   b <- p1_trans[1, 2] + p1_trans[1, 1] / a
 
@@ -44,7 +44,7 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
   )
   profile <- rbind(pq = p1_trans, end) |> as.data.frame(row.names = c("start", "end"), col.names = c("X", "Y"))
   if (return.sf) {
-    profile |> sf::st_as_sf(coords = c("X", "Y"), crs = crs)
+    profile |> st_as_sf(coords = c("X", "Y"), crs = crs)
   } else {
     profile
   }
@@ -61,7 +61,7 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #' @export
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 #' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
 #'   profile_azimuth()
 profile_azimuth <- function(profile) {
@@ -99,7 +99,7 @@ profile_line <- function(x) {
 #' @export
 #'
 #' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 #' profile_points(p1, profile.azimuth = 135, profile.length = 10000, crs = sf::st_crs("EPSG:26915")) |>
 #'   profile_line() |>
 #'   profile_length()
@@ -110,7 +110,7 @@ profile_length <- function(x, ...) {
 
 #' @title Distance Between Points
 #' @description This uses the **haversine** formula (by default) to calculate the great-circle
-#' distance between two points, i.e., the shortest distance over the earth’s
+#' distance between two points, i.e., the shortest distance over the earth<U+2019>s
 #' surface.
 #' @param a lon, lat coordinate of point 1
 #' @param b lon, lat coordinate of point 2

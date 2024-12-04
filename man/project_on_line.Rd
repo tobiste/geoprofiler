@@ -4,16 +4,17 @@
 \alias{project_on_line}
 \title{Project points on cross section}
 \usage{
-project_on_line(x, start, azimuth, drop.units = TRUE)
+project_on_line(x, profile, azimuth = NULL, drop.units = TRUE)
 }
 \arguments{
 \item{x}{\code{'sf'} object}
 
-\item{start}{\code{'sf'} object of profile starting point}
+\item{profile}{\code{'sf'} object of the profile or the profile's starting point.}
+
+\item{azimuth}{numeric. Direction (in degrees) emanating from starting point.
+Is ignored when \code{profile} contains two points or is a \code{LINESTRING}.}
 
 \item{drop.units}{logical. Whether the return should show the units or not.}
-
-\item{azi}{numeric. Direction (in degrees) emanating from starting point.}
 }
 \value{
 \code{"tibble"}. \code{X} is the distance along the profile line.
@@ -26,6 +27,6 @@ Project points on a cross section given by a starting point and the direction
 \examples{
 data(locations_example)
 p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-projected <- project_on_line(locations_example, start = p1, azimuth = 135)
+projected <- project_on_line(locations_example, profile = p1, azimuth = 135)
 plot(projected)
 }

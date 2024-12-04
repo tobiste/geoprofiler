@@ -8,6 +8,13 @@
 \description{
 Measures distances along lines defined by a direction.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://tobiste.github.io/geoprofiler/}
+}
+
+}
 \author{
 \strong{Maintainer}: Tobias Stephan \email{tobias.stephan1@yahoo.com} (\href{https://orcid.org/0000-0002-9290-014X}{ORCID})
 

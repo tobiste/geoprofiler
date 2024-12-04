@@ -8,7 +8,7 @@ profile_points(
   start,
   profile.azimuth,
   profile.length,
-  crs = st_crs(x),
+  crs = st_crs(start),
   return.sf = TRUE
 )
 }
@@ -36,6 +36,6 @@ Use metric values (meters, kilometers, etc) in case of a projected coordinate re
 when geographical coordinate reference frame.
 }
 \examples{
-p1 <- data.frame(lon = -90.8, lat = 48.6, z = 1) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+p1 <- data.frame(lon = -90.8, lat = 48.6) |> sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 profile_points(p1, profile.azimuth = 135, profile.length = units::set_units(10, "km"), crs = sf::st_crs("EPSG:26915"))
 }
