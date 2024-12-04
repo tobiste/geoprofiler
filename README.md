@@ -84,6 +84,10 @@ ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))
 
 <img src="man/figures/README-plot-1.png" width="100%" />
 
+The above example uses the `quakes` dataset giving the locations of 1000
+seismic events of MB \> 4.0. The events occurred in a cube near Fiji
+since 1964.
+
 ## Documentation
 
 The detailed documentation can be found at

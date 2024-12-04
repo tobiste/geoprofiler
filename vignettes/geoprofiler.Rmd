@@ -33,7 +33,15 @@ options(ggplot2.continuous.fill = "viridis")
 
 ## Load example data
 
-For this tutorial we use the `quakes` dataset giving the locations of 1000 
+You can use any spatial data that can be converted into a `sf` object.
+If you have a shape file for example, simply import it into R using the function 
+```{r read, eval=FALSE,echo=FALSE}
+my_data <- sf::read_sf('path/to/my/file.shp')
+```
+
+
+For this tutorial we use the `quakes` dataset (from R's 'datasets` package) 
+giving the locations of 1000 
 seismic events of MB > 4.0. The events occurred in a cube near Fiji since 1964.
 ```{r load_data}
 data("quakes")
