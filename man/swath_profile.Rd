@@ -19,9 +19,9 @@ tibble
 Statistics of the elevation data across a swath profile.
 }
 \examples{
-# Create a radnom raster
+# Create a random raster
 r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60)
-values(r) <- runif(terra::ncell(r))
+terra::values(r) <- runif(terra::ncell(r))
 
 # Create a random profile
 profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>

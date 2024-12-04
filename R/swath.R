@@ -2,33 +2,34 @@
 #'
 #' Calculate swath-profile values perpendicular to a straight baseline.
 #' The distance between samples and the number of samples can be
-#' specified, see arguments \code{k} and \code{dist}. Values of the swath-profile are
-#' extracted from a given raster file, see argument \code{raster}. CRS of raster
+#' specified, see arguments `k` and `dist`. Values of the swath-profile are
+#' extracted from a given raster file, see argument `raster`. CRS of raster
 #' and points have to be the same.
 #'
 #' @param profile either a `sf` object or a matrix(ncol=2, nrow=2) with x and
 #' y coordinates of beginning and end point of the baseline; each point in one row
 #' \describe{
-#'   \item{column 1}{x coordinates}
-#'   \item{column 2}{y coordinates}
+#'   \item{column 1}{x coordinates (or longitudes)}
+#'   \item{column 2}{y coordinates (latitudes)}
 #' }
-#' @param raster Raster file (loaded with [terra::rast()])
+#' @param raster Raster file (`"SpatRaster"` object as loaded by [terra::rast()])
 #' @param k integer. number of lines on each side of the baseline
 #' @param dist numeric. distance between lines
-#' @param crs character. coordinate reference system. Uses the CRS of `raster`
-#' by default and transforms the profile into this coordinate system.
+#' @param crs character. coordinate reference system. Both the `raster` and the
+#' `profile` are transformed into this CRS. Uses the CRS of `raster` by default.
 #' @param method character. method for extraction of raw data, see
-#' [terra::extract()]: default value: "bilinear"
+#' [terra::extract()]: default value: `"bilinear"`
 #'
 #' @returns list.
 #' \describe{
 #'  \item{`swath`}{matrix. Statistics of the raster measured along the lines}
 #'  \item{`data`}{list of numeric vector containing the data extracted from the raster along each line}
-#'  \item{`lines`}{list of of the lines as SpatVectors}
+#'  \item{`lines`}{list of of the lines as `"SpatVector"` objects}
 #'  }
 #'
 #' @importFrom sf st_crs st_transform st_point st_set_crs st_linestring
-#' @importFrom terra extract vect ymin xmin as.lines
+#' @importFrom terra extract vect ymin xmin as.lines values crs project extend
+#' @importFrom stats median quantile sd
 #'
 #' @source The algorithm is a modified version of "swathR"
 #' by Vincent Haburaj (https://github.com/jjvhab/swathR).
@@ -40,7 +41,7 @@
 #' @examples
 #' # Create a random raster
 #' r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60, crs = "WGS84")
-#' values(r) <- runif(terra::ncell(r))
+#' terra::values(r) <- runif(terra::ncell(r))
 #'
 #' # Create a random profile
 #' profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
@@ -163,9 +164,9 @@ swath_extract <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
 #' @importFrom dplyr c_across rowwise ungroup mutate tibble as_tibble everything matches select starts_with rename
 #' @export
 #' @examples
-#' # Create a radnom raster
+#' # Create a random raster
 #' r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60)
-#' values(r) <- runif(terra::ncell(r))
+#' terra::values(r) <- runif(terra::ncell(r))
 #'
 #' # Create a random profile
 #' profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
@@ -174,6 +175,8 @@ swath_extract <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
 #'
 #' swath_profile(swath, profile.length = profile_length(profile_line(profile)))
 swath_profile <- function(x, profile.length = NULL) {
+  min <- mean <- sd <- quantile25 <- quantile75 <- median <- max <- distance <- NULL
+
   if (is.null(profile.length)) profile.length <- 1
   center <- paste0("X", as.character(median(seq_along(x$data))))
 
@@ -191,13 +194,13 @@ swath_profile <- function(x, profile.length = NULL) {
   data.frame(elevs) |>
     rowwise() |>
     mutate(
-      min = min(c_across(everything()), na.rm = TRUE),
-      mean = mean(c_across(everything()), na.rm = TRUE),
-      sd = sd(c_across(everything()), na.rm = TRUE),
-      quantile25 = quantile(c_across(everything()), na.rm = TRUE)[2],
-      median = median(c_across(everything()), na.rm = TRUE),
-      quantile75 = quantile(c_across(everything()), na.rm = TRUE)[4],
-      max = max(c_across(everything()), na.rm = TRUE)
+      min = base::min(c_across(everything()), na.rm = TRUE),
+      mean = base::mean(c_across(everything()), na.rm = TRUE),
+      sd = stats::sd(c_across(everything()), na.rm = TRUE),
+      quantile25 = stats::quantile(c_across(everything()), na.rm = TRUE)[2],
+      median = stats::median(c_across(everything()), na.rm = TRUE),
+      quantile75 = stats::quantile(c_across(everything()), na.rm = TRUE)[4],
+      max = base::max(c_across(everything()), na.rm = TRUE)
     ) |>
     ungroup() |>
     mutate(

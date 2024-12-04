@@ -21,28 +21,28 @@ swath_extract(
 \item{profile}{either a \code{sf} object or a matrix(ncol=2, nrow=2) with x and
 y coordinates of beginning and end point of the baseline; each point in one row
 \describe{
-\item{column 1}{x coordinates}
-\item{column 2}{y coordinates}
+\item{column 1}{x coordinates (or longitudes)}
+\item{column 2}{y coordinates (latitudes)}
 }}
 
-\item{raster}{Raster file (loaded with \code{\link[terra:rast]{terra::rast()}})}
+\item{raster}{Raster file (\code{"SpatRaster"} object as loaded by \code{\link[terra:rast]{terra::rast()}})}
 
 \item{k}{integer. number of lines on each side of the baseline}
 
 \item{dist}{numeric. distance between lines}
 
-\item{crs}{character. coordinate reference system. Uses the CRS of \code{raster}
-by default and transforms the profile into this coordinate system.}
+\item{crs}{character. coordinate reference system. Both the \code{raster} and the
+\code{profile} are transformed into this CRS. Uses the CRS of \code{raster} by default.}
 
 \item{method}{character. method for extraction of raw data, see
-\code{\link[terra:extract]{terra::extract()}}: default value: "bilinear"}
+\code{\link[terra:extract]{terra::extract()}}: default value: \code{"bilinear"}}
 }
 \value{
 list.
 \describe{
 \item{\code{swath}}{matrix. Statistics of the raster measured along the lines}
 \item{\code{data}}{list of numeric vector containing the data extracted from the raster along each line}
-\item{\code{lines}}{list of of the lines as SpatVectors}
+\item{\code{lines}}{list of of the lines as \code{"SpatVector"} objects}
 }
 }
 \description{
@@ -55,7 +55,7 @@ and points have to be the same.
 \examples{
 # Create a random raster
 r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60, crs = "WGS84")
-values(r) <- runif(terra::ncell(r))
+terra::values(r) <- runif(terra::ncell(r))
 
 # Create a random profile
 profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>

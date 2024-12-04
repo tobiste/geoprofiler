@@ -13,3 +13,4 @@
 #' @examples
 #' data("locations_example")
 #' head("locations_example")
+"locations_example"
