@@ -137,11 +137,11 @@ point:</p>
 two steps:</p>
 <ol style="list-style-type: decimal">
 <li>Extract the elevation values along an array of straight lines
-parallel to our profile line using <code><a href="../reference/swath_extract.html">swath_extract()</a></code>.</li>
+parallel to our profile line using <code><a href="../reference/swath_profile.html">swath_profile()</a></code>.</li>
 <li>Calculate some statistics within the swath using
-<code><a href="../reference/swath_profile.html">swath_profile()</a></code>.</li>
+<code><a href="../reference/swath_stats.html">swath_stats()</a></code>.</li>
 </ol>
-<p>The function <code><a href="../reference/swath_extract.html">swath_extract()</a></code> requires the profile line,
+<p>The function <code><a href="../reference/swath_profile.html">swath_profile()</a></code> requires the profile line,
 the raster file, and amount of equally-spaced, parallel lines on either
 side of the profile line (argument <code>k</code>) and the distance
 between these lines (<code>dist</code> distance (same units as the
@@ -149,17 +149,18 @@ coordinate reference system).</p>
 <p>Here, we want to have <code>k=10</code> lines on both sides of the
 profile, spaced by <code>dist=300</code> meters:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">swath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swath_extract.html">swath_extract</a></span><span class="op">(</span><span class="va">my_profile</span>, raster <span class="op">=</span> <span class="va">my_raster</span>, k <span class="op">=</span> <span class="fl">10</span>, dist <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
-<p>Next, we calculate some statistics of the elevation across the swath,
-such as min/max, mean and standard deviation using the function
-<code><a href="../reference/swath_profile.html">swath_profile()</a></code>. We can plug in the length of the profile
-by specifying the parameter <code>profile.length</code> by calculating
-the length using the function <code><a href="../reference/profile_length.html">profile_length()</a></code>.</p>
+<code class="sourceCode R"><span><span class="va">swath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swath_profile.html">swath_profile</a></span><span class="op">(</span><span class="va">my_profile</span>, raster <span class="op">=</span> <span class="va">my_raster</span>, k <span class="op">=</span> <span class="fl">10</span>, dist <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
+<p>Next, we calculate some summary statistics of the elevation across
+the swath, such as min/max, mean and standard deviation using the
+function <code><a href="../reference/swath_stats.html">swath_stats()</a></code>. We can plug in the length of the
+profile by specifying the parameter <code>profile.length</code> by
+calculating the length using the function
+<code><a href="../reference/profile_length.html">profile_length()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_swath_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swath_profile.html">swath_profile</a></span><span class="op">(</span><span class="va">swath</span>, profile.length <span class="op">=</span> <span class="fu"><a href="../reference/profile_length.html">profile_length</a></span><span class="op">(</span><span class="va">my_profile</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_swath_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swath_stats.html">swath_stats</a></span><span class="op">(</span><span class="va">swath</span>, profile.length <span class="op">=</span> <span class="fu"><a href="../reference/profile_length.html">profile_length</a></span><span class="op">(</span><span class="va">my_profile</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="plot-the-swath-profile">Plot the Swath profile<a class="anchor" aria-label="anchor" href="#plot-the-swath-profile"></a>
+<h2 id="plot-the-swath-profile">Plot the swath profile<a class="anchor" aria-label="anchor" href="#plot-the-swath-profile"></a>
 </h2>
 <p>Finally we can plot the elevation along the profile and add some of
 the calculated statistics:</p>

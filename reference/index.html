@@ -51,7 +51,7 @@
           <code><a href="line_ends.html">line_ends()</a></code>
 
         </dt>
-        <dd>#' Distances in degree to kilometer #' #' Converts distances along a great circle path from degree into kilometer #' #' @param x numeric vector of distances in degree #' @param start,end start and end point as vectors with lon, lat #' @return units object #' @importFrom scales rescale #' @importFrom units set_units #' @export deg_2_km &lt;- function(x, start, end) distance.km.total &lt;- point_distance(start, end) distances.km &lt;- scales::rescale(x, to = c(0, distance.km.total)) units::set_units(distances.km, "km") Extract end points of a line</dd>
+        <dd>Extract End Points of a Line</dd>
       </dl><dl><dt>
 
           <code><a href="locations_example.html">locations_example</a></code>
@@ -102,16 +102,16 @@
         <dd>Example raster data set</dd>
       </dl><dl><dt>
 
-          <code><a href="swath_extract.html">swath_extract()</a></code>
-
-        </dt>
-        <dd>Swath Profile</dd>
-      </dl><dl><dt>
-
           <code><a href="swath_profile.html">swath_profile()</a></code>
 
         </dt>
-        <dd>Elevation profile</dd>
+        <dd>Swath Elevation Profile Statistics</dd>
+      </dl><dl><dt>
+
+          <code><a href="swath_stats.html">swath_stats()</a></code>
+
+        </dt>
+        <dd>Summary Statistics on Swath Elevation Profile</dd>
       </dl></div>
   </main></div>
 
