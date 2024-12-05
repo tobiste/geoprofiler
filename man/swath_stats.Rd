@@ -26,7 +26,7 @@ terra::values(r) <- runif(terra::ncell(r))
 # Create a random profile
 profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-swath <- swath_extract(profile, r, k = 5, dist = 10)
+swath <- swath_profile(profile, r, k = 5, dist = 10)
 
 swath_stats(swath, profile.length = profile_length(profile_line(profile)))
 }
