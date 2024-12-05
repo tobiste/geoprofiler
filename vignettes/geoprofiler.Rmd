@@ -36,7 +36,7 @@ options(ggplot2.continuous.fill = "viridis")
 You can use any spatial data that can be converted into a `sf` object.
 If you have a shape file for example, simply import it into R using the function 
 ```{r read, eval=FALSE, include=TRUE}
-my_data <- sf::read_sf('path/to/my/file.shp')
+my_data <- sf::read_sf("path/to/my/file.shp")
 ```
 
 
@@ -49,12 +49,12 @@ crs <- st_crs("EPSG:3460") # coordinate reference system for projection
 
 # Convert to sf object and transform to  projected coordinates
 quakes_sf <- st_as_sf(quakes, coords = c("long", "lat"), crs = "WGS84") |>
-  st_transform(crs = crs) 
+  st_transform(crs = crs)
 
 quake_map <- ggplot() +
   geom_sf(aes(color = depth, size = mag), data = quakes_sf) +
   scale_x_continuous(breaks = seq(-360, 360, 5)) +
-  scale_size_binned() 
+  scale_size_binned()
 
 quake_map
 ```
@@ -72,7 +72,7 @@ For example, if the profile should be a line connecting two points:
 ```{r pts}
 profile_pts <- data.frame(lon = c(160, -170), lat = c(-15, -24)) |>
   st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |> # convert to sf object
-  st_transform(crs = crs)  # transform to projected coordinates
+  st_transform(crs = crs) # transform to projected coordinates
 ```
 
 Combine the two points to a line and add the profile line to the map:
@@ -126,9 +126,8 @@ these axes against each other::
 ```{r profile_map}
 quakes_profile |>
   # divide by 1000 for km:
-  mutate(X = X/1000, Y = Y / 1000) |> 
-  
-  ggplot(aes(X, Y, color = depth, size = mag)) + 
+  mutate(X = X / 1000, Y = Y / 1000) |>
+  ggplot(aes(X, Y, color = depth, size = mag)) +
   geom_point() +
   geom_hline(yintercept = 0, lwd = 1) +
   scale_size_binned() +
@@ -148,13 +147,13 @@ For example, to shift the profile line more to the "North", we simply subtract
 the desired shift (to move it "down", we would need to add the desired number).
 
 ```{r shift}
-quakes_profile_shifted <- quakes_profile |> 
+quakes_profile_shifted <- quakes_profile |>
   mutate(
-    X = X/1000, # in km
-    Y = (Y/1000) - 500 # in km and shifted by 500 km to the "North"
-  ) 
+    X = X / 1000, # in km
+    Y = (Y / 1000) - 500 # in km and shifted by 500 km to the "North"
+  )
 
-  ggplot(quakes_profile_shifted, aes(X, Y, color = depth, size = mag)) +
+ggplot(quakes_profile_shifted, aes(X, Y, color = depth, size = mag)) +
   geom_point() +
   geom_hline(yintercept = 0, lwd = 1) +
   scale_size_binned() +
@@ -171,7 +170,7 @@ plotting data points that are too far away from the profile:
 quakes_profile_filtered <- filter(
   quakes_profile_shifted,
   abs(Y) <= 750,
-  X >= 1600 
+  X >= 1600
 )
 ```
 
@@ -196,15 +195,15 @@ than the more distant points.
 This gives a somewhat 3-dimensional look to it:
 
 ```{r profile_plot2}
- quakes_profile_shifted |>
-   arrange(desc(abs(Y))) |> # sort data to have close datapoints in foreground
-   ggplot(aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +
-   geom_point() +
-   scale_color_viridis_c("Richter Magnitude", option = "A") +
-   scale_size_continuous("Distance from profile (km)", range = c(3, .1)) +
-   scale_alpha_continuous("Distance from profile (km)", range = c(1, .1)) +
-   scale_y_reverse() +
-   scale_x_continuous(guide = guide_axis(position = "top")) +
-   labs(x = "Distance along profile (km)", y = "Depth (km)") +
-   coord_cartesian(expand = FALSE)
+quakes_profile_shifted |>
+  arrange(desc(abs(Y))) |> # sort data to have close datapoints in foreground
+  ggplot(aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +
+  geom_point() +
+  scale_color_viridis_c("Richter Magnitude", option = "A") +
+  scale_size_continuous("Distance from profile (km)", range = c(3, .1)) +
+  scale_alpha_continuous("Distance from profile (km)", range = c(1, .1)) +
+  scale_y_reverse() +
+  scale_x_continuous(guide = guide_axis(position = "top")) +
+  labs(x = "Distance along profile (km)", y = "Depth (km)") +
+  coord_cartesian(expand = FALSE)
 ```

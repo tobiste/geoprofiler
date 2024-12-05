@@ -190,7 +190,7 @@ point_distance <- function(a, b, ...) {
 #' ) |>
 #'   profile_line() |>
 #'   line_ends()
-line_ends <- function(x){
+line_ends <- function(x) {
   x_pts <- sf::st_cast(x, "POINT")
   start <- x_pts[1]
   end <- x_pts[length(x_pts)]
