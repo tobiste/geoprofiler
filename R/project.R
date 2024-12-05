@@ -15,7 +15,6 @@
 #' @importFrom sf st_transform st_coordinates st_crs st_as_sf st_is_longlat st_geometry_type st_cast st_coordinates
 #' @importFrom dplyr mutate mutate_all as_tibble tibble
 #' @importFrom tectonicr deg2rad rad2deg
-#' @importFrom structr vrotate
 #' @importFrom units set_units drop_units
 #'
 #' @author Tobias Stephan
