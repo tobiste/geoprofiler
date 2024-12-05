@@ -78,7 +78,7 @@ Finally, create your profile plot:
 ```{r plot}
 ggplot(quakes_profile, aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +
   geom_point() +
-  scale_color_viridis_c("Richter Magnitude", option = "A") +
+  scale_color_viridis_c("Richter magnitude", option = "A") +
   scale_size_continuous(bquote("Distance from profile (" * degree * ")"), range = c(3, .1)) +
   scale_alpha_continuous(bquote("Distance from profile (" * degree * ")"), range = c(1, .1)) +
   scale_y_reverse() +
