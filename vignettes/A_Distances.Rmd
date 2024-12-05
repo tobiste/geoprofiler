@@ -1,10 +1,10 @@
 ---
-title: "geoprofiler"
+title: "1. Distances Along Oriented Profiles"
 author: "Tobias Stephan"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{geoprofiler}
+  %\VignetteIndexEntry{1. Distances Along Oriented Profiles}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 editor_options: 
@@ -58,7 +58,7 @@ quake_map <- ggplot() +
 
 quake_map
 ```
-> Transform your dataset into a projected cooridnate reference system to deal 
+> Transform your dataset into a projected coordinate reference system to deal 
 with units such as m, km, miles etc. Otherwise the units will be in degrees.
 
 

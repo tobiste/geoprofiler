@@ -3,7 +3,7 @@
 \docType{data}
 \name{locations_example}
 \alias{locations_example}
-\title{Sample data set}
+\title{Exsmple \code{sf} data set}
 \format{
 An object of class \code{sf}
 }
