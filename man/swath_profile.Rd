@@ -65,5 +65,5 @@ profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
 swath_profile(profile, r, k = 2, dist = 1)
 }
 \seealso{
-\code{\link[=swath_profile]{swath_profile()}}
+\code{\link[=swath_stats]{swath_stats()}}
 }

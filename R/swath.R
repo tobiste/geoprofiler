@@ -38,7 +38,7 @@
 #'
 #' @export
 #'
-#' @seealso [swath_profile()]
+#' @seealso [swath_stats()]
 #'
 #' @examples
 #' # Create a random raster
@@ -159,12 +159,15 @@ swath_profile <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
 #'
 #' Statistics of the elevation data across a swath profile.
 #'
-#' @param x list. The return object of [swath_extract()]
+#' @param x list. The return object of [swath_profile()]
 #' @param profile.length numeric or `units` object. If `NULL` the fractional
 #' distance is returned, i.e. 0 at start and 1 at the end of the profile.
 #' @return tibble
 #' @importFrom dplyr c_across rowwise ungroup mutate tibble as_tibble everything matches select starts_with rename
 #' @export
+#'
+#' @seealso [swath_profile()]
+#'
 #' @examples
 #' # Create a random raster
 #' r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60)

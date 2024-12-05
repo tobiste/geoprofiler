@@ -7,7 +7,7 @@
 swath_stats(x, profile.length = NULL)
 }
 \arguments{
-\item{x}{list. The return object of \code{\link[=swath_extract]{swath_extract()}}}
+\item{x}{list. The return object of \code{\link[=swath_profile]{swath_profile()}}}
 
 \item{profile.length}{numeric or \code{units} object. If \code{NULL} the fractional
 distance is returned, i.e. 0 at start and 1 at the end of the profile.}
@@ -29,4 +29,7 @@ profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
 swath <- swath_profile(profile, r, k = 5, dist = 10)
 
 swath_stats(swath, profile.length = profile_length(profile_line(profile)))
+}
+\seealso{
+\code{\link[=swath_profile]{swath_profile()}}
 }
