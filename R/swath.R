@@ -26,12 +26,14 @@
 #'  \item{`swath`}{matrix. Statistics of the raster measured along the lines}
 #'  \item{`data`}{list of numeric vector containing the data extracted from the
 #'  raster along each line}
-#'  \item{`lines`}{list of of the lines as `"SpatVector"` objects}
+#'  \item{`lines`}{swath lines as `"sf"` objects}
 #'  }
 #'
 #' @importFrom sf st_crs st_transform st_point st_set_crs st_linestring
 #' @importFrom terra extract vect ymin xmin as.lines values crs project extend
 #' @importFrom stats median quantile sd
+#'
+#' @details The final width of the swath is: \eqn{2k \times  \text{dist}}.
 #'
 #' @source The algorithm is a modified version of "swathR"
 #' by Vincent Haburaj (https://github.com/jjvhab/swathR).
@@ -150,10 +152,10 @@ swath_profile <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
     quantile(x, na.rm = T)[4]
   })
 
-  list(swath = swath, data = raw.data, lines = allLines)
+  allLines_combined <- terra::vect(allLines) |> sf::st_as_sf()
+
+  list(swath = swath, data = raw.data, lines = allLines_combined)
 }
-
-
 
 #' Summary Statistics on Swath Elevation Profile
 #'
@@ -200,12 +202,14 @@ swath_stats <- function(x, profile.length = NULL) {
     rowwise() |>
     mutate(
       min = base::min(c_across(everything()), na.rm = TRUE),
-      mean = base::mean(c_across(everything()), na.rm = TRUE),
-      sd = stats::sd(c_across(everything()), na.rm = TRUE),
       quantile25 = stats::quantile(c_across(everything()), na.rm = TRUE)[2],
       median = stats::median(c_across(everything()), na.rm = TRUE),
       quantile75 = stats::quantile(c_across(everything()), na.rm = TRUE)[4],
-      max = base::max(c_across(everything()), na.rm = TRUE)
+      max = base::max(c_across(everything()), na.rm = TRUE),
+      mean = base::mean(c_across(everything()), na.rm = TRUE),
+      sd = stats::sd(c_across(everything()), na.rm = TRUE)
+      #CI95_low = stats::t.test(c_across(everything()))$conf.int[1],
+      #CI95_upp = stats::t.test(c_across(everything()))$conf.int[2]
     ) |>
     ungroup() |>
     mutate(

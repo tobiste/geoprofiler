@@ -44,7 +44,7 @@ list.
 \item{\code{swath}}{matrix. Statistics of the raster measured along the lines}
 \item{\code{data}}{list of numeric vector containing the data extracted from the
 raster along each line}
-\item{\code{lines}}{list of of the lines as \code{"SpatVector"} objects}
+\item{\code{lines}}{swath lines as \code{"sf"} objects}
 }
 }
 \description{
@@ -53,6 +53,9 @@ The distance between samples and the number of samples can be
 specified, see arguments \code{k} and \code{dist}. Values of the swath-profile are
 extracted from a given raster file, see argument \code{raster}. CRS of raster
 and points have to be the same.
+}
+\details{
+The final width of the swath is: \eqn{2k \times  \text{dist}}.
 }
 \examples{
 # Create a random raster

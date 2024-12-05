@@ -105,8 +105,19 @@ Here, we want to have `k=10` lines on both sides of the profile, spaced by
 `dist=300` meters:
 
 ```{r swath1, warning=FALSE, message=FALSE}
-swath <- swath_profile(my_profile, raster = my_raster, k = 10, dist = 300)
+swath <- swath_profile(my_profile, raster = my_raster, k = 5, dist = 1000)
 ```
+
+The output is a list that contains the extracted elevation data and also the 
+generated swath lines:
+
+```{r swath_map, warning=FALSE, message=FALSE}
+elevation_map +
+  geom_sf(data = swath$lines, lwd = .1)
+```
+ > Note that the width of the swath profile is $2k \times \text{dist}$. 
+ In our example, the width is 10.000 (m).
+
 
 Next, we calculate some summary statistics of the elevation across the swath, 
 such as 
@@ -121,13 +132,15 @@ my_swath_profile <- swath_stats(swath, profile.length = profile_length(my_profil
 
 ## Plot the swath profile
 
-Finally we can plot the elevation along the profile and add some of the 
+Finally, we can plot the elevation along the profile and add some of the 
 calculated statistics:
 
 ```{r plot, warning=FALSE, message=FALSE}
 ggplot(my_swath_profile, aes(distance, elevation)) +
   geom_ribbon(aes(ymin = min, ymax = max), fill = "grey80") +
-  geom_ribbon(aes(ymin = quantile25, ymax = quantile75), fill = "grey70") +
+  # geom_ribbon(aes(ymin = quantile25, ymax = quantile75), fill = "grey70") +
+  geom_ribbon(aes(ymin = mean - sd, ymax = mean + sd), fill = "grey70") +
+
   geom_line(aes(y = median), color = "darkred", lwd = 1) +
   geom_line(lty = 2)
 ```
