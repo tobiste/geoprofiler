@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-Swath profiles are a popular method for examining the topography of an
+This tutorial demonstrates how to create **swath profiles**, which are a 
+popular method for examining the topography of an
 area. These profiles represent generalized elevation profiles of a
 landscape section.
 
@@ -28,11 +29,11 @@ landscape section.
 deviation, ...) for the elevation in the nearby area.
 
 ```{r setup, message=FALSE,warning=FALSE}
+# Load packages required for this tutorial:
 library(geoprofiler)
 library(ggplot2)
 library(units)
 library(sf)
-library(dplyr)
 library(terra)
 library(tidyterra)
 
@@ -58,7 +59,7 @@ ETOPO dataset.
 data("raster_example")
 crs <- "EPSG:26915" # coordinate reference system for projection
 
-my_raster <- terra::rast(raster_example, type="xyz", crs="WGS84") |> 
+my_raster <- terra::rast(raster_example, type = "xyz", crs = "WGS84") |>
   terra::project(crs)
 
 elevation_map <- ggplot() +
@@ -73,15 +74,16 @@ We can define the profile by the direction and distance from one point:
 
 ```{r azimuth, warning=FALSE, message=FALSE}
 my_profile <- data.frame(lon = -90.75, lat = 48.61) |>
-  sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |> 
-  profile_points(profile.azimuth = 135, profile.length = units::set_units(16, "km"),
-                 crs = sf::st_crs(crs)
-  ) |> 
+  sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |>
+  profile_points(
+    profile.azimuth = 135,
+    profile.length = units::set_units(16, "km"),
+    crs = sf::st_crs(crs)
+  ) |>
   profile_line()
-  
+
 elevation_map +
   geom_sf(data = my_profile, lwd = 1)
-
 ```
 
 ## Extract elevation along swath profile
@@ -94,28 +96,37 @@ steps:
 2.  Calculate some statistics within the swath using `swath_profile()`.
 
 
-The function `swath_extract()` requires the profile line, the raster file, and amount of equally-spaced, parallel lines on either side of the profile line (argument `k`) and the distance between these lines (`dist` distance (same units as the coordinate reference system). 
+The function `swath_extract()` requires the profile line, the raster file, and 
+amount of equally-spaced, parallel lines on either side of the profile line 
+(argument `k`) and the distance between these lines (`dist` distance (same 
+units as the coordinate reference system). 
 
-Here, we want to have `k=10` lines on both sides of the profile, spaced by `dist=300` meters:
+Here, we want to have `k=10` lines on both sides of the profile, spaced by 
+`dist=300` meters:
 
 ```{r swath1, warning=FALSE, message=FALSE}
 swath <- swath_extract(my_profile, raster = my_raster, k = 10, dist = 300)
 ```
 
-Next, we calculate some statistics of the elevation across the swath, such as min/max, mean and standard deviation using the function `swath_profile()`. We can plug in the length of the profile by specifying the parameter
-`profile.length` by calculating the length using the function `profile_length()`.
+Next, we calculate some statistics of the elevation across the swath, such as 
+min/max, mean and standard deviation using the function `swath_profile()`. We 
+can plug in the length of the profile by specifying the parameter
+`profile.length` by calculating the length using the function 
+`profile_length()`.
+
 ```{r swath2, warning=FALSE, message=FALSE}
 my_swath_profile <- swath_profile(swath, profile.length = profile_length(my_profile))
 ```
 
 ## Plot the Swath profile
 
-Finally we can plot the elevation along the profile and add some of the calculated statistics:
+Finally we can plot the elevation along the profile and add some of the 
+calculated statistics:
 
 ```{r plot, warning=FALSE, message=FALSE}
 ggplot(my_swath_profile, aes(distance, elevation)) +
   geom_ribbon(aes(ymin = min, ymax = max), fill = "grey80") +
   geom_ribbon(aes(ymin = quantile25, ymax = quantile75), fill = "grey70") +
-  geom_line(aes(y=median), color = 'darkred', lwd = 1) +
-  geom_line(lty=2) 
+  geom_line(aes(y = median), color = "darkred", lwd = 1) +
+  geom_line(lty = 2)
 ```

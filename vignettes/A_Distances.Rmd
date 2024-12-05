@@ -12,6 +12,10 @@ editor_options:
     wrap: 72
 ---
 
+This tutorial demonstrates how to set up a profile line, measure distances 
+of data locations along and across the line, and plot data values against the 
+profile distance by using the functionality of `{geoprofiler}`.
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -19,7 +23,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ```{r setup, message=FALSE,warning=FALSE}
+# Load packages required for this tutorial:
 library(geoprofiler)
 library(ggplot2)
 library(units)
@@ -35,6 +41,7 @@ options(ggplot2.continuous.fill = "viridis")
 
 You can use any spatial data that can be converted into a `sf` object.
 If you have a shape file for example, simply import it into R using the function 
+
 ```{r read, eval=FALSE, include=TRUE}
 my_data <- sf::read_sf("path/to/my/file.shp")
 ```
