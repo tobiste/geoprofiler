@@ -32,7 +32,8 @@ Create a end point along a profile line starting at a point with a defined
 direction and length.
 }
 \note{
-Use metric values (meters, kilometers, etc) in case of a projected coordinate reference frame, and degree
+Use metric values (meters, kilometers, etc) in case of a projected coordinate
+reference frame, and degree
 when geographical coordinate reference frame.
 }
 \examples{

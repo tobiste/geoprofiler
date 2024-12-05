@@ -11,7 +11,8 @@
 #' object (`TRUE`, the default) object or as a data.frame.
 #'
 #' @note
-#' Use metric values (meters, kilometers, etc) in case of a projected coordinate reference frame, and degree
+#' Use metric values (meters, kilometers, etc) in case of a projected coordinate
+#' reference frame, and degree
 #' when geographical coordinate reference frame.
 #'
 #' @return class depends on `return.sf`.
@@ -54,6 +55,29 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
   }
 }
 
+#' Combine Points to a Line
+#'
+#' @param x `sf` point object
+#'
+#' @returns `sf` line object
+#' @export
+#' @importFrom sf st_combine st_cast
+#' @seealso [profile_points()]
+#'
+#' @examples
+#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
+#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
+#' profile_points(p1,
+#'   profile.azimuth = 135, profile.length = 10000,
+#'   crs = sf::st_crs("EPSG:26915")
+#' ) |>
+#'   profile_line()
+profile_line <- function(x) {
+  sf::st_combine(x) |>
+    sf::st_cast("LINESTRING")
+}
+
+
 #' Azimuth Between Profile Points
 #'
 #' @param profile `sf` point object. First point marks the start point.
@@ -63,6 +87,8 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #'
 #' @returns numeric. Azimuth in degrees
 #' @export
+#'
+#' @seealso [profile_length()]
 #'
 #' @examples
 #' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
@@ -81,27 +107,6 @@ profile_azimuth <- function(profile) {
     units::set_units("degree")
 }
 
-#' Combine Points to a Line
-#'
-#' @param x `sf` point object
-#'
-#' @returns `sf` line object
-#' @export
-#' @importFrom sf st_combine st_cast
-#'
-#' @examples
-#' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
-#'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' profile_points(p1,
-#'   profile.azimuth = 135, profile.length = 10000,
-#'   crs = sf::st_crs("EPSG:26915")
-#' ) |>
-#'   profile_line()
-profile_line <- function(x) {
-  sf::st_combine(x) |>
-    sf::st_cast("LINESTRING")
-}
-
 #' Length of Profile
 #'
 #' @param x `sf` line object
@@ -110,6 +115,8 @@ profile_line <- function(x) {
 #' @return units object when coordinate system is set.
 #' @importFrom sf st_length
 #' @export
+#'
+#' @seealso [profile_azimuth()]
 #'
 #' @examples
 #' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
@@ -156,24 +163,7 @@ point_distance <- function(a, b, ...) {
     units::set_units("km")
 }
 
-#' #' Distances in degree to kilometer
-#' #'
-#' #' Converts distances along a great circle path from degree into kilometer
-#' #'
-#' #' @param x numeric vector of distances in degree
-#' #' @param start,end start and end point as vectors with lon, lat
-#' #' @return units object
-#' #' @importFrom scales rescale
-#' #' @importFrom units set_units
-#' #' @export
-#' deg_2_km <- function(x, start, end) {
-#'   distance.km.total <- point_distance(start, end)
-#'   distances.km <- scales::rescale(x, to = c(0, distance.km.total))
-#'   units::set_units(distances.km, "km")
-#' }
-
-
-#' Extract end points of a line
+#' Extract End Points of a Line
 #'
 #' @param x `sf` line object
 #'

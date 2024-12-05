@@ -92,11 +92,11 @@ To calculate the elevation along the swath profiles, we need to do two
 steps:
 
 1.  Extract the elevation values along an array of straight lines
-    parallel to our profile line using `swath_extract()`.
-2.  Calculate some statistics within the swath using `swath_profile()`.
+    parallel to our profile line using `swath_profile()`.
+2.  Calculate some statistics within the swath using `swath_stats()`.
 
 
-The function `swath_extract()` requires the profile line, the raster file, and 
+The function `swath_profile()` requires the profile line, the raster file, and 
 amount of equally-spaced, parallel lines on either side of the profile line 
 (argument `k`) and the distance between these lines (`dist` distance (same 
 units as the coordinate reference system). 
@@ -105,20 +105,21 @@ Here, we want to have `k=10` lines on both sides of the profile, spaced by
 `dist=300` meters:
 
 ```{r swath1, warning=FALSE, message=FALSE}
-swath <- swath_extract(my_profile, raster = my_raster, k = 10, dist = 300)
+swath <- swath_profile(my_profile, raster = my_raster, k = 10, dist = 300)
 ```
 
-Next, we calculate some statistics of the elevation across the swath, such as 
-min/max, mean and standard deviation using the function `swath_profile()`. We 
+Next, we calculate some summary statistics of the elevation across the swath, 
+such as 
+min/max, mean and standard deviation using the function `swath_stats()`. We 
 can plug in the length of the profile by specifying the parameter
 `profile.length` by calculating the length using the function 
 `profile_length()`.
 
 ```{r swath2, warning=FALSE, message=FALSE}
-my_swath_profile <- swath_profile(swath, profile.length = profile_length(my_profile))
+my_swath_profile <- swath_stats(swath, profile.length = profile_length(my_profile))
 ```
 
-## Plot the Swath profile
+## Plot the swath profile
 
 Finally we can plot the elevation along the profile and add some of the 
 calculated statistics:

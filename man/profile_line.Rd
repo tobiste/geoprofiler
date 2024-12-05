@@ -24,3 +24,6 @@ profile_points(p1,
 ) |>
   profile_line()
 }
+\seealso{
+\code{\link[=profile_points]{profile_points()}}
+}

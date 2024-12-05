@@ -1,4 +1,4 @@
-#' Swath Profile
+#' Swath Elevation Profile Statistics
 #'
 #' Calculate swath-profile values perpendicular to a straight baseline.
 #' The distance between samples and the number of samples can be
@@ -7,7 +7,8 @@
 #' and points have to be the same.
 #'
 #' @param profile either a `sf` object or a matrix(ncol=2, nrow=2) with x and
-#' y coordinates of beginning and end point of the baseline; each point in one row
+#' y coordinates of beginning and end point of the baseline; each point in one
+#' row
 #' \describe{
 #'   \item{column 1}{x coordinates (or longitudes)}
 #'   \item{column 2}{y coordinates (latitudes)}
@@ -23,7 +24,8 @@
 #' @returns list.
 #' \describe{
 #'  \item{`swath`}{matrix. Statistics of the raster measured along the lines}
-#'  \item{`data`}{list of numeric vector containing the data extracted from the raster along each line}
+#'  \item{`data`}{list of numeric vector containing the data extracted from the
+#'  raster along each line}
 #'  \item{`lines`}{list of of the lines as `"SpatVector"` objects}
 #'  }
 #'
@@ -46,8 +48,8 @@
 #' # Create a random profile
 #' profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
 #'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' swath_extract(profile, r, k = 2, dist = 1)
-swath_extract <- function(profile, raster, k = 1, dist, crs = terra::crs(raster), method = c("bilinear", "simple")) {
+#' swath_profile(profile, r, k = 2, dist = 1)
+swath_profile <- function(profile, raster, k = 1, dist, crs = terra::crs(raster), method = c("bilinear", "simple")) {
   method <- match.arg(method)
   raster <- terra::project(raster, crs)
 
@@ -153,7 +155,7 @@ swath_extract <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
 
 
 
-#' Elevation profile
+#' Summary Statistics on Swath Elevation Profile
 #'
 #' Statistics of the elevation data across a swath profile.
 #'
@@ -173,8 +175,8 @@ swath_extract <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
 #'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 #' swath <- swath_extract(profile, r, k = 5, dist = 10)
 #'
-#' swath_profile(swath, profile.length = profile_length(profile_line(profile)))
-swath_profile <- function(x, profile.length = NULL) {
+#' swath_stats(swath, profile.length = profile_length(profile_line(profile)))
+swath_stats <- function(x, profile.length = NULL) {
   min <- mean <- sd <- quantile25 <- quantile75 <- median <- max <- distance <- NULL
 
   if (is.null(profile.length)) profile.length <- 1

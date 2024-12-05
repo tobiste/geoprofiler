@@ -27,3 +27,6 @@ profile_points(p1,
   profile_line() |>
   profile_length()
 }
+\seealso{
+\code{\link[=profile_azimuth]{profile_azimuth()}}
+}

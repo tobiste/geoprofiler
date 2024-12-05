@@ -2,22 +2,7 @@
 % Please edit documentation in R/profile_points.R
 \name{line_ends}
 \alias{line_ends}
-\title{#' Distances in degree to kilometer
-#'
-#' Converts distances along a great circle path from degree into kilometer
-#'
-#' @param x numeric vector of distances in degree
-#' @param start,end start and end point as vectors with lon, lat
-#' @return units object
-#' @importFrom scales rescale
-#' @importFrom units set_units
-#' @export
-deg_2_km <- function(x, start, end) {
-distance.km.total <- point_distance(start, end)
-distances.km <- scales::rescale(x, to = c(0, distance.km.total))
-units::set_units(distances.km, "km")
-}
-Extract end points of a line}
+\title{Extract End Points of a Line}
 \usage{
 line_ends(x)
 }
@@ -28,22 +13,7 @@ line_ends(x)
 \code{sf} point object
 }
 \description{
-#' Distances in degree to kilometer
-#'
-#' Converts distances along a great circle path from degree into kilometer
-#'
-#' @param x numeric vector of distances in degree
-#' @param start,end start and end point as vectors with lon, lat
-#' @return units object
-#' @importFrom scales rescale
-#' @importFrom units set_units
-#' @export
-deg_2_km <- function(x, start, end) {
-distance.km.total <- point_distance(start, end)
-distances.km <- scales::rescale(x, to = c(0, distance.km.total))
-units::set_units(distances.km, "km")
-}
-Extract end points of a line
+Extract End Points of a Line
 }
 \examples{
 p1 <- data.frame(lon = -90.8, lat = 48.6) |>

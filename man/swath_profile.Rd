@@ -2,31 +2,68 @@
 % Please edit documentation in R/swath.R
 \name{swath_profile}
 \alias{swath_profile}
-\title{Elevation profile}
+\title{Swath Elevation Profile Statistics}
+\source{
+The algorithm is a modified version of "swathR"
+by Vincent Haburaj (https://github.com/jjvhab/swathR).
+}
 \usage{
-swath_profile(x, profile.length = NULL)
+swath_profile(
+  profile,
+  raster,
+  k = 1,
+  dist,
+  crs = terra::crs(raster),
+  method = c("bilinear", "simple")
+)
 }
 \arguments{
-\item{x}{list. The return object of \code{\link[=swath_extract]{swath_extract()}}}
+\item{profile}{either a \code{sf} object or a matrix(ncol=2, nrow=2) with x and
+y coordinates of beginning and end point of the baseline; each point in one
+row
+\describe{
+\item{column 1}{x coordinates (or longitudes)}
+\item{column 2}{y coordinates (latitudes)}
+}}
 
-\item{profile.length}{numeric or \code{units} object. If \code{NULL} the fractional
-distance is returned, i.e. 0 at start and 1 at the end of the profile.}
+\item{raster}{Raster file (\code{"SpatRaster"} object as loaded by \code{\link[terra:rast]{terra::rast()}})}
+
+\item{k}{integer. number of lines on each side of the baseline}
+
+\item{dist}{numeric. distance between lines}
+
+\item{crs}{character. coordinate reference system. Both the \code{raster} and the
+\code{profile} are transformed into this CRS. Uses the CRS of \code{raster} by default.}
+
+\item{method}{character. method for extraction of raw data, see
+\code{\link[terra:extract]{terra::extract()}}: default value: \code{"bilinear"}}
 }
 \value{
-tibble
+list.
+\describe{
+\item{\code{swath}}{matrix. Statistics of the raster measured along the lines}
+\item{\code{data}}{list of numeric vector containing the data extracted from the
+raster along each line}
+\item{\code{lines}}{list of of the lines as \code{"SpatVector"} objects}
+}
 }
 \description{
-Statistics of the elevation data across a swath profile.
+Calculate swath-profile values perpendicular to a straight baseline.
+The distance between samples and the number of samples can be
+specified, see arguments \code{k} and \code{dist}. Values of the swath-profile are
+extracted from a given raster file, see argument \code{raster}. CRS of raster
+and points have to be the same.
 }
 \examples{
 # Create a random raster
-r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60)
+r <- terra::rast(ncol = 10, nrow = 10, xmin = -150, xmax = -80, ymin = 20, ymax = 60, crs = "WGS84")
 terra::values(r) <- runif(terra::ncell(r))
 
 # Create a random profile
 profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-swath <- swath_extract(profile, r, k = 5, dist = 10)
-
-swath_profile(swath, profile.length = profile_length(profile_line(profile)))
+swath_profile(profile, r, k = 2, dist = 1)
+}
+\seealso{
+\code{\link[=swath_profile]{swath_profile()}}
 }
