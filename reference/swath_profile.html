@@ -119,10 +119,14 @@ row</p><dl><dt>column 1</dt>
 raster along each line</p></dd>
 
 <dt><code>lines</code></dt>
-<dd><p>list of of the lines as <code>"SpatVector"</code> objects</p></dd>
+<dd><p>swath lines as <code>"sf"</code> objects</p></dd>
 
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The final width of the swath is: \(2k \times  \text{dist}\).</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="swath_stats.html">swath_stats()</a></code></p></div>
@@ -180,41 +184,17 @@ raster along each line</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $lines</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -138.971, -88.97101, 26.71499, 56.71499  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -139.4855, -89.4855, 25.85749, 55.85749  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -140, -90, 25, 55  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[4]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -140.5145, -90.5145, 24.14251, 54.14251  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lines[[5]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  class       : SpatVector </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  geometry    : lines </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  dimensions  : 1, 0  (geometries, attributes)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  extent      : -141.029, -91.02899, 23.28501, 53.28501  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 5 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -141.029 ymin: 23.28501 xmax: -88.97101 ymax: 56.71499</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 LINESTRING (-138.971 56.714...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 LINESTRING (-139.4855 55.85...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   LINESTRING (-140 55, -90 25)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 LINESTRING (-140.5145 54.14...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 LINESTRING (-141.029 53.285...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
