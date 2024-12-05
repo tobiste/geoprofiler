@@ -137,10 +137,10 @@ calculated statistics:
 
 ```{r plot, warning=FALSE, message=FALSE}
 ggplot(my_swath_profile, aes(distance, elevation)) +
-  geom_ribbon(aes(ymin = min, ymax = max), fill = "grey80") +
-  # geom_ribbon(aes(ymin = quantile25, ymax = quantile75), fill = "grey70") +
-  geom_ribbon(aes(ymin = mean - sd, ymax = mean + sd), fill = "grey70") +
-
+  geom_ribbon(aes(ymin = min, ymax = max), fill = "grey90") +
+  geom_ribbon(aes(ymin = quantile25, ymax = quantile75), fill = "grey80") +
+  # geom_ribbon(aes(ymin = mean - sd, ymax = mean + sd), fill = "grey60") +
   geom_line(aes(y = median), color = "darkred", lwd = 1) +
+  # geom_line(aes(y = mean), color = "dodgerblue", lwd = 1) +
   geom_line(lty = 2)
 ```
