@@ -1,3 +1,22 @@
+interpolate_azimuth <- function(x) {
+  pts <- st_cast(x, "POINT") |>
+    st_coordinates() |>
+    as.data.frame()
+
+  azi <- lm(Y ~ X, data = pts) |>
+    coef() |>
+    atan() |>
+    tectonicr::rad2deg()
+  set_units(azi[2], degree)
+}
+
+npts <- function(x) {
+  st_cast(x, "POINT") |>
+    st_coordinates() |>
+    nrow()
+}
+
+
 #' Profile End Point
 #'
 #' Create a end point along a profile line starting at a point with a defined
@@ -86,6 +105,13 @@ profile_line <- function(x) {
 #' @importFrom tectonicr get_azimuth
 #'
 #' @returns numeric. Azimuth in degrees
+#'
+#' @details
+#' If only two points are given, the azimuth is calculated using triangulation
+#' from the `tectonicr` package.
+#' If more than two points are given, the azimuth is calculated using linear
+#' interpolation in the coordinate reference frame given by `profile`.#'
+#'
 #' @export
 #'
 #' @seealso [profile_length()]
@@ -100,11 +126,15 @@ profile_line <- function(x) {
 #' ) |>
 #'   profile_azimuth()
 profile_azimuth <- function(profile) {
-  profile_deg <- profile |>
-    sf::st_transform("WGS84") |>
-    sf::st_coordinates()
-  tectonicr::get_azimuth(profile_deg[1, 2], profile_deg[1, 1], profile_deg[2, 2], profile_deg[2, 1]) |>
-    units::set_units("degree")
+  if (npts(profile) > 2) {
+    interpolate_azimuth(profile)
+  } else {
+    profile_deg <- profile |>
+      sf::st_transform("WGS84") |>
+      sf::st_coordinates()
+    tectonicr::get_azimuth(profile_deg[1, 2], profile_deg[1, 1], profile_deg[2, 2], profile_deg[2, 1]) |>
+      units::set_units("degree")
+  }
 }
 
 #' Length of Profile
@@ -185,4 +215,31 @@ line_ends <- function(x) {
   start <- x_pts[1]
   end <- x_pts[length(x_pts)]
   c(start, end)
+}
+
+#' Draw a profile line or a point to retrieve coordinates
+#'
+#' @param x `sf` object
+#' @inheritParams graphics::locator
+#' @param col color of line or point
+#' @name draw
+NULL
+
+#' @rdname draw
+#' @export
+get_coordinates <- function(x, n = 1, type = "o", col = "#B63679FF", ...) {
+  crds <- sf::st_coordinates(x)
+  plot(crds[, "X"], crds[, "Y"], asp = 1, xlab = "x", ylab = "y", main = "Click for coordinates")
+  # pts <- identify(crds[, "X"], crds[, "Y"], ..., col = 'red')
+  #  x[pts, ]
+  pts <- invisible(locator(n = n, type = type, col = col, ...))
+  data.frame(x = pts$x, y = pts$y) |>
+    sf::st_as_sf(coords = c("x", "y"), crs = sf::st_crs(x))
+}
+
+#' @rdname draw
+#' @export
+draw_profile <- function(x, n = 10, ...) {
+  get_coordinates(x, n = n, ...) |>
+    profile_line()
 }

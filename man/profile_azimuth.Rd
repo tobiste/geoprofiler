@@ -15,6 +15,12 @@ numeric. Azimuth in degrees
 \description{
 Azimuth Between Profile Points
 }
+\details{
+If only two points are given, the azimuth is calculated using triangulation
+from the \code{tectonicr} package.
+If more than two points are given, the azimuth is calculated using linear
+interpolation in the coordinate reference frame given by \code{profile}.#'
+}
 \examples{
 p1 <- data.frame(lon = -90.8, lat = 48.6) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")

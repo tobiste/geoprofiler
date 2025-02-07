@@ -65,6 +65,7 @@ quake_map <- ggplot() +
 
 quake_map
 ```
+
 > Transform your dataset into a projected coordinate reference system to deal 
 with units such as m, km, miles etc. Otherwise the units will be in degrees.
 
@@ -113,6 +114,14 @@ data.frame(lon = 160, lat = 15) |>
 system and must be in degree for lon-lat cooridnates and m (km, miles, ...) if 
 otherwise.
 
+### Draw a profile line interactively
+
+You can also just define a profile by clicking or drawing points on the map:
+
+```{r draw, eval=FALSE, include=TRUE}
+draw_profile(quakes_sf, n = 3)
+```
+
 
 ## Determine the distances along (and across) the profile
 
@@ -142,6 +151,7 @@ quakes_profile |>
   scale_y_continuous(breaks = seq(-3000, 3000, 250)) +
   coord_fixed()
 ```
+
 In this plot the profile line is a horizontal line (`X=0`) and the start point 
 of the profile has the coordinates `X=0` and `Y=0`.
 
