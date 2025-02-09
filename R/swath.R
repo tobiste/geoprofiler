@@ -29,8 +29,6 @@
 #'  \item{`lines`}{swath lines as `"sf"` objects}
 #'  }
 #'
-#' @importFrom sf st_crs st_transform st_point st_set_crs st_linestring
-#' @importFrom terra extract vect ymin xmin as.lines values crs project extend
 #' @importFrom stats median quantile sd
 #'
 #' @details The final width of the swath is: \eqn{2k \times  \text{dist}}.
@@ -165,7 +163,7 @@ swath_profile <- function(profile, raster, k = 1, dist, crs = terra::crs(raster)
 #' @param profile.length numeric or `units` object. If `NULL` the fractional
 #' distance is returned, i.e. 0 at start and 1 at the end of the profile.
 #' @return tibble
-#' @importFrom dplyr c_across rowwise ungroup mutate tibble as_tibble everything matches select starts_with rename
+#' @importFrom dplyr c_across everything matches mutate rename rowwise select starts_with ungroup
 #' @export
 #'
 #' @seealso [swath_profile()]

@@ -1,3 +1,6 @@
+#' @importFrom sf st_cast st_coordinates
+#' @importFrom stats coef lm
+#' @importFrom units set_units
 interpolate_azimuth <- function(x) {
   pts <- st_cast(x, "POINT") |>
     st_coordinates() |>
@@ -10,6 +13,7 @@ interpolate_azimuth <- function(x) {
   set_units(azi[2], degree)
 }
 
+#' @importFrom sf st_cast st_coordinates
 npts <- function(x) {
   st_cast(x, "POINT") |>
     st_coordinates() |>
@@ -36,8 +40,7 @@ npts <- function(x) {
 #'
 #' @return class depends on `return.sf`.
 #' @export
-#' @importFrom sf st_as_sf st_transform st_coordinates st_crs st_is_longlat
-#' @importFrom units set_units drop_units
+#' @importFrom sf st_as_sf st_coordinates st_crs
 #'
 #' @examples
 #' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
@@ -110,7 +113,7 @@ profile_line <- function(x) {
 #' If only two points are given, the azimuth is calculated using triangulation
 #' from the `tectonicr` package.
 #' If more than two points are given, the azimuth is calculated using linear
-#' interpolation in the coordinate reference frame given by `profile`.#'
+#' interpolation in the coordinate reference frame given by `profile`.
 #'
 #' @export
 #'
@@ -227,6 +230,7 @@ NULL
 
 #' @rdname draw
 #' @export
+#' @importFrom graphics locator plot
 get_coordinates <- function(x, n = 1, type = "o", col = "#B63679FF", ...) {
   crds <- sf::st_coordinates(x)
   plot(crds[, "X"], crds[, "Y"], asp = 1, xlab = "x", ylab = "y", main = "Click for coordinates")

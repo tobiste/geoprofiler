@@ -19,7 +19,7 @@ Azimuth Between Profile Points
 If only two points are given, the azimuth is calculated using triangulation
 from the \code{tectonicr} package.
 If more than two points are given, the azimuth is calculated using linear
-interpolation in the coordinate reference frame given by \code{profile}.#'
+interpolation in the coordinate reference frame given by \code{profile}.
 }
 \examples{
 p1 <- data.frame(lon = -90.8, lat = 48.6) |>
