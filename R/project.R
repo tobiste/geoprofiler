@@ -12,7 +12,7 @@
 #' `Y` is the distance across the profile line. (units of `X` and `Y` depend on
 #' coordinate reference system).
 #'
-#' @importFrom dplyr as_tibble mutate mutate_all tibble
+#' @importFrom dplyr as_tibble mutate tibble across
 #' @importFrom sf st_as_sf st_cast st_coordinates st_crs st_geometry_type st_is_longlat st_transform
 #' @importFrom tectonicr deg2rad
 #' @importFrom units drop_units set_units
@@ -54,7 +54,7 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
     st_transform(crs = "WGS84") |>
     st_coordinates() |>
     as_tibble() |>
-    mutate_all(deg2rad)
+    mutate(across(.fns = deg2rad))
 
   p1_coords <- profile[1, ] |>
     st_transform(crs = st_crs(x)) |>
@@ -83,7 +83,7 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
   res <- tibble(
     X = lon2, Y = lat2
   ) |>
-    mutate_all(rad2deg) |>
+    mutate(across(.fns = tectonicr::rad2deg)) |>
     st_as_sf(coords = c("X", "Y"), crs = "WGS84", na.fail = FALSE, remove = FALSE) |>
     st_transform(crs = st_crs(x)) |>
     st_coordinates() |>
@@ -97,12 +97,12 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
   )
   if (st_is_longlat(x)) {
     res3 <- mutate(res2, X = ifelse(X > 180, 360 - X, X)) |>
-      mutate_all(set_units, value = "degree")
+      mutate(across(.fns = ~ set_units(.x, value = "degree")))
   } else {
-    res3 <- mutate_all(res2, set_units, value = "m")
+    res3 <- mutate(res2, across(.fns = ~ set_units(.x, value = "m")))
   }
   if (drop.units) {
-    mutate_all(res3, drop_units)
+    mutate(res3, across(.fns = drop_units))
   } else {
     res3
   }
