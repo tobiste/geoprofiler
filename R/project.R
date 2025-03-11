@@ -12,7 +12,7 @@
 #' `Y` is the distance across the profile line. (units of `X` and `Y` depend on
 #' coordinate reference system).
 #'
-#' @importFrom dplyr as_tibble mutate tibble across
+#' @importFrom dplyr across as_tibble mutate tibble
 #' @importFrom sf st_as_sf st_cast st_coordinates st_crs st_geometry_type st_is_longlat st_transform
 #' @importFrom tectonicr deg2rad
 #' @importFrom units drop_units set_units
