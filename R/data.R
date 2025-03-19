@@ -1,4 +1,4 @@
-#' Exsmple `sf` data set
+#' Example `sf` data set
 #'
 #' example dataset
 #'
@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' data("locations_example")
-#' head("locations_example")
+#' head(locations_example)
 "locations_example"
 
 #' Example raster data set
@@ -29,5 +29,5 @@
 #'
 #' @examples
 #' data("raster_example")
-#' head("raster_example")
+#' head(raster_example)
 "raster_example"

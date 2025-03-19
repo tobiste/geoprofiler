@@ -15,6 +15,6 @@ example dataset
 }
 \examples{
 data("raster_example")
-head("raster_example")
+head(raster_example)
 }
 \keyword{datasets}

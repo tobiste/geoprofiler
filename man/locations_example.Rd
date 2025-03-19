@@ -3,7 +3,7 @@
 \docType{data}
 \name{locations_example}
 \alias{locations_example}
-\title{Exsmple \code{sf} data set}
+\title{Example \code{sf} data set}
 \format{
 An object of class \code{sf}
 }
@@ -15,6 +15,6 @@ example dataset
 }
 \examples{
 data("locations_example")
-head("locations_example")
+head(locations_example)
 }
 \keyword{datasets}
