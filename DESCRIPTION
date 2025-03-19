@@ -4,8 +4,9 @@ Version: 0.0.1.9000
 Authors@R: 
     person("Tobias", "Stephan", , "tobias.stephan1@yahoo.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9290-014X"))
-Description: Toolset to measures distances along lines defined by a direction or
-    create swath profiles. Also provides functions to create swath profiles.
+Description: Toolset to measures distances along lines defined by a
+    direction or create swath profiles. Also provides functions to create
+    swath profiles.
 License: MIT + file LICENSE
 URL: https://tobiste.github.io/geoprofiler/
 BugReports: https://github.com/tobiste/geoprofiler/issues
@@ -21,9 +22,11 @@ Suggests:
     ggplot2,
     knitr,
     rmarkdown,
+    testthat (>= 3.0.0),
     tidyterra
 VignetteBuilder: 
     knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

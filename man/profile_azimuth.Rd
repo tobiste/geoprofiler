@@ -4,13 +4,13 @@
 \alias{profile_azimuth}
 \title{Azimuth Between Profile Points}
 \usage{
-profile_azimuth(profile)
+profile_azimuth(x)
 }
 \arguments{
-\item{profile}{\code{sf} point object. First point marks the start point.}
+\item{x}{\code{sf} point object. First point marks the start point.}
 }
 \value{
-numeric. Azimuth in degrees
+Azimuth as \code{units} object
 }
 \description{
 Azimuth Between Profile Points

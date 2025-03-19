@@ -15,11 +15,12 @@ profile_points(
 \arguments{
 \item{start}{\code{sf} point object.}
 
-\item{profile.azimuth}{numeric. Direction of profile in degrees.}
+\item{profile.azimuth}{numeric or \code{units} object. Direction of profile in
+degrees if numeric.}
 
-\item{profile.length}{units object.}
+\item{profile.length}{numeric or \code{units} object.}
 
-\item{crs}{Coordinate reference system. Should be readable by \code{\link[sf:st_crs]{sf::st_crs()}}.}
+\item{crs}{Coordinate reference system. Should be parsed by \code{\link[sf:st_crs]{sf::st_crs()}}.}
 
 \item{return.sf}{logical. Should the profile points be returned as a \code{sf}
 object (\code{TRUE}, the default) object or as a data.frame.}

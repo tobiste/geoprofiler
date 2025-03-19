@@ -206,8 +206,8 @@ swath_stats <- function(x, profile.length = NULL) {
       max = base::max(c_across(everything()), na.rm = TRUE),
       mean = base::mean(c_across(everything()), na.rm = TRUE),
       sd = stats::sd(c_across(everything()), na.rm = TRUE)
-      #CI95_low = stats::t.test(c_across(everything()))$conf.int[1],
-      #CI95_upp = stats::t.test(c_across(everything()))$conf.int[2]
+      # CI95_low = stats::t.test(c_across(everything()))$conf.int[1],
+      # CI95_upp = stats::t.test(c_across(everything()))$conf.int[2]
     ) |>
     ungroup() |>
     mutate(

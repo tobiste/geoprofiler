@@ -1,6 +1,7 @@
 #' @importFrom sf st_cast st_coordinates
 #' @importFrom stats coef lm
 #' @importFrom units set_units
+#' @keywords internal
 interpolate_azimuth <- function(x) {
   pts <- st_cast(x, "POINT") |>
     st_coordinates() |>
@@ -14,6 +15,7 @@ interpolate_azimuth <- function(x) {
 }
 
 #' @importFrom sf st_cast st_coordinates
+#' @keywords internal
 npts <- function(x) {
   st_cast(x, "POINT") |>
     st_coordinates() |>
@@ -27,9 +29,10 @@ npts <- function(x) {
 #' direction and length.
 #'
 #' @param start `sf` point object.
-#' @param profile.azimuth numeric. Direction of profile in degrees.
-#' @param profile.length units object.
-#' @param crs Coordinate reference system. Should be readable by [sf::st_crs()].
+#' @param profile.azimuth numeric or `units` object. Direction of profile in
+#' degrees if numeric.
+#' @param profile.length numeric or `units` object.
+#' @param crs Coordinate reference system. Should be parsed by [sf::st_crs()].
 #' @param return.sf logical. Should the profile points be returned as a `sf`
 #' object (`TRUE`, the default) object or as a data.frame.
 #'
@@ -50,6 +53,18 @@ npts <- function(x) {
 #'   crs = sf::st_crs("EPSG:26915")
 #' )
 profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(start), return.sf = TRUE) {
+  stopifnot(
+    # inherits(start, 'sf'),
+    # is.numeric(profile.azimuth),
+    # inherits(profile.length, 'units'),
+    is.logical(return.sf)
+  )
+
+  if (inherits(profile.azimuth, "units")) {
+    profile.azimuth <- units::set_units(profile.azimuth, "degree") |>
+      units::drop_units()
+  }
+
   p1_trans <- st_transform(start, crs = crs) |>
     st_coordinates()
   a <- tectonicr:::tand(90 - profile.azimuth)
@@ -102,12 +117,12 @@ profile_line <- function(x) {
 
 #' Azimuth Between Profile Points
 #'
-#' @param profile `sf` point object. First point marks the start point.
+#' @param x `sf` point object. First point marks the start point.
 #'
 #' @importFrom sf st_coordinates
 #' @importFrom tectonicr get_azimuth
 #'
-#' @returns numeric. Azimuth in degrees
+#' @returns Azimuth as `units` object
 #'
 #' @details
 #' If only two points are given, the azimuth is calculated using triangulation
@@ -128,11 +143,11 @@ profile_line <- function(x) {
 #'   crs = sf::st_crs("EPSG:26915")
 #' ) |>
 #'   profile_azimuth()
-profile_azimuth <- function(profile) {
-  if (npts(profile) > 2) {
-    interpolate_azimuth(profile)
+profile_azimuth <- function(x) {
+  if (npts(x) > 2) {
+    interpolate_azimuth(x)
   } else {
-    profile_deg <- profile |>
+    profile_deg <- x |>
       sf::st_transform("WGS84") |>
       sf::st_coordinates()
     tectonicr::get_azimuth(profile_deg[1, 2], profile_deg[1, 1], profile_deg[2, 2], profile_deg[2, 1]) |>
@@ -145,7 +160,7 @@ profile_azimuth <- function(profile) {
 #' @param x `sf` line object
 #' @param ... (optional) passed on to [s2::s2_distance()]
 #'
-#' @return units object when coordinate system is set.
+#' @return `units` object when coordinate system is set.
 #' @importFrom sf st_length
 #' @export
 #'
@@ -178,10 +193,12 @@ profile_length <- function(x, ...) {
 #' @importFrom tectonicr dist_greatcircle
 #' @export
 #' @examples
-#' berlin <- c(52.517, 13.4)
-#' tokyo <- c(35.7, 139.767)
+#' berlin <- c(13.4, 52.517) # lon, lat
+#' tokyo <- c(139.767, 35.7) # lon, lat
 #' point_distance(berlin, tokyo)
 point_distance <- function(a, b, ...) {
+  stopifnot(is.numeric(a), is.numeric(b))
+
   a_rad <- (pi / 180 * a)
   b_rad <- (pi / 180 * b)
 
@@ -232,6 +249,8 @@ NULL
 #' @export
 #' @importFrom graphics locator plot
 get_coordinates <- function(x, n = 1, type = "o", col = "#B63679FF", ...) {
+  stopifnot(is.integer(n))
+
   crds <- sf::st_coordinates(x)
   plot(crds[, "X"], crds[, "Y"], asp = 1, xlab = "x", ylab = "y", main = "Click for coordinates")
   # pts <- identify(crds[, "X"], crds[, "Y"], ..., col = 'red')

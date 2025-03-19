@@ -6,7 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/tobiste/geoprofiler/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tobiste/geoprofiler/actions/workflows/R-CMD-check.yaml)
-
+[![Codecov test
+coverage](https://codecov.io/gh/tobiste/geoprofiler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tobiste/geoprofiler?branch=main)
 <!-- badges: end -->
 
 The goal of `{geoprofiler}` is to get distances along and across
@@ -63,6 +64,11 @@ Calculate the distances of all points along and across the profile line:
 ``` r
 quakes_profile <- profile_coords(quakes_sf, profile = profile) |>
   dplyr::bind_cols(quakes_sf)
+#> Warning: There was 1 warning in `mutate()`.
+#> ℹ In argument: `across(.fns = deg2rad)`.
+#> Caused by warning:
+#> ! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
+#> ℹ Please supply `.cols` instead.
 ```
 
 Finally, create your profile plot:

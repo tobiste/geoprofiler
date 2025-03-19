@@ -12,7 +12,7 @@ profile_length(x, ...)
 \item{...}{(optional) passed on to \code{\link[s2:s2_is_collection]{s2::s2_distance()}}}
 }
 \value{
-units object when coordinate system is set.
+\code{units} object when coordinate system is set.
 }
 \description{
 Length of Profile

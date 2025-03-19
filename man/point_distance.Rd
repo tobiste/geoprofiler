@@ -22,7 +22,7 @@ the great-circle distance between two points, i.e., the shortest distance
 over the earth's surface.
 }
 \examples{
-berlin <- c(52.517, 13.4)
-tokyo <- c(35.7, 139.767)
+berlin <- c(13.4, 52.517) # lon, lat
+tokyo <- c(139.767, 35.7) # lon, lat
 point_distance(berlin, tokyo)
 }
