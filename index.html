@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">geoprofiler</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,6 @@
 </h1></div>
 <!-- badges: start -->
 
-<!-- badges: end -->
 <p>The goal of <a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a> is to get distances along and across user-defined profile lines or transects. This is useful when variables depend on distances.</p>
 <p><img src="reference/figures/fig.png"></p>
 <p>The concept of <a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a> is a coordinate transformation of your geo-coordinates into “profile coordinates”. These coordinates are the distances along and across your profile.</p>
@@ -93,7 +92,12 @@
 <p>Calculate the distances of all points along and across the profile line:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quakes_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/profile_coords.html">profile_coords</a></span><span class="op">(</span><span class="va">quakes_sf</span>, profile <span class="op">=</span> <span class="va">profile</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">quakes_sf</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">quakes_sf</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There was 1 warning in `mutate()`.</span></span>
+<span><span class="co">#&gt; ℹ In argument: `across(.fns = deg2rad)`.</span></span>
+<span><span class="co">#&gt; Caused by warning:</span></span>
+<span><span class="co">#&gt; ! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.</span></span>
+<span><span class="co">#&gt; ℹ Please supply `.cols` instead.</span></span></code></pre></div>
 <p>Finally, create your profile plot:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">quakes_profile</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">depth</span>, color <span class="op">=</span> <span class="va">mag</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -164,6 +168,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/tobiste/geoprofiler/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tobiste/geoprofiler/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/tobiste/geoprofiler?branch=main" class="external-link"><img src="https://codecov.io/gh/tobiste/geoprofiler/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
