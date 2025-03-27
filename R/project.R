@@ -54,7 +54,7 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
     st_transform(crs = "WGS84") |>
     st_coordinates() |>
     as_tibble() |>
-    mutate(across(.fns = deg2rad))
+    mutate(across(everything(), deg2rad))
 
   p1_coords <- profile[1, ] |>
     st_transform(crs = st_crs(x)) |>

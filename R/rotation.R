@@ -2,7 +2,7 @@
 
 #' @keywords internal
 vlength <- function(x) {
-  sqrt(x[, 1]^2 + x[, 2]^2 + x[, 3]^2)
+  sqrt(x[, 1]^2 + x[, 2]^2 + x[, 3]^2) |> unname()
 }
 
 #' @keywords internal
@@ -17,15 +17,16 @@ vec2mat <- function(x) {
   } else {
     m <- as.matrix(x)
   }
+  # colnames(m) <- c("x", "y", "z")
   m
 }
 
 #' @keywords internal
 vcross <- function(x, y) {
-  xxy <- cbind(
-    x = x[, 2] * y[, 3] - x[, 3] * y[, 2],
-    y = x[, 3] * y[, 1] - x[, 1] * y[, 3],
-    z = x[, 1] * y[, 2] - x[, 2] * y[, 1]
+  cbind(
+    x[, 2] * y[, 3] - x[, 3] * y[, 2],
+    x[, 3] * y[, 1] - x[, 1] * y[, 3],
+    x[, 1] * y[, 2] - x[, 2] * y[, 1]
   )
 }
 
@@ -37,6 +38,5 @@ vrotate <- function(x, rotaxis, rotangle) {
   xrot <- x + vax * sin(rotangle) + vcross(rotaxis, vax) * 2 * (sin(rotangle / 2))^2 # Helmut
 
   # colnames(xrot) <- c("x", "y", "z")
-  # xrot
-  setNames(xrot, c("x", "y", "z"))
+  xrot
 }
