@@ -17,7 +17,7 @@ Is ignored when \code{profile} contains two points or is a \code{LINESTRING}.}
 \item{drop.units}{logical. Whether the return should show the units or not.}
 }
 \value{
-\code{"tibble"}. \code{X} is the distance along the profile line.
+\code{tibble} where \code{X} is the distance along the profile line.
 \code{Y} is the distance across the profile line. (units of \code{X} and \code{Y} depend on
 coordinate reference system).
 }

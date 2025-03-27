@@ -36,6 +36,7 @@ vrotate <- function(x, rotaxis, rotangle) {
   vax <- vcross(rotaxis, x)
   xrot <- x + vax * sin(rotangle) + vcross(rotaxis, vax) * 2 * (sin(rotangle / 2))^2 # Helmut
 
-  colnames(xrot) <- c("x", "y", "z")
-  xrot
+  # colnames(xrot) <- c("x", "y", "z")
+  # xrot
+  setNames(xrot, c("x", "y", "z"))
 }

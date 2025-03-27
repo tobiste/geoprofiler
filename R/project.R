@@ -8,11 +8,11 @@
 #' Is ignored when `profile` contains two points or is a `LINESTRING`.
 #' @param drop.units logical. Whether the return should show the units or not.
 #'
-#' @returns `"tibble"`. `X` is the distance along the profile line.
+#' @returns `tibble` where `X` is the distance along the profile line.
 #' `Y` is the distance across the profile line. (units of `X` and `Y` depend on
 #' coordinate reference system).
 #'
-#' @importFrom dplyr across as_tibble mutate tibble
+#' @importFrom dplyr across as_tibble mutate tibble everything
 #' @importFrom sf st_as_sf st_cast st_coordinates st_crs st_geometry_type st_is_longlat st_transform
 #' @importFrom tectonicr deg2rad
 #' @importFrom units drop_units set_units
@@ -83,7 +83,7 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
   res <- tibble(
     X = lon2, Y = lat2
   ) |>
-    mutate(across(.fns = tectonicr::rad2deg)) |>
+    mutate(across(everything(), tectonicr::rad2deg)) |>
     st_as_sf(coords = c("X", "Y"), crs = "WGS84", na.fail = FALSE, remove = FALSE) |>
     st_transform(crs = st_crs(x)) |>
     st_coordinates() |>
@@ -97,12 +97,12 @@ profile_coords <- function(x, profile, azimuth = NULL, drop.units = TRUE) {
   )
   if (st_is_longlat(x)) {
     res3 <- mutate(res2, X = ifelse(X > 180, 360 - X, X)) |>
-      mutate(across(.fns = ~ set_units(.x, value = "degree")))
+      mutate(across(everything(), ~ set_units(.x, value = "degree")))
   } else {
-    res3 <- mutate(res2, across(.fns = ~ set_units(.x, value = "m")))
+    res3 <- mutate(res2, across(everything(), ~ set_units(.x, value = "m")))
   }
   if (drop.units) {
-    mutate(res3, across(.fns = drop_units))
+    mutate(res3, across(everything(), drop_units))
   } else {
     res3
   }
