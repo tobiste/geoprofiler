@@ -184,12 +184,7 @@ the map:</p>
 transform the data into a coordinate system of the profile line:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quakes_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/profile_coords.html">profile_coords</a></span><span class="op">(</span><span class="va">quakes_sf</span>, profile <span class="op">=</span> <span class="va">profile_l</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">quakes_sf</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: There was 1 warning in `mutate()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `across(.fns = deg2rad)`.</span></span>
-<span><span class="co">#&gt; Caused by warning:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please supply `.cols` instead.</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">quakes_sf</span><span class="op">)</span></span></code></pre></div>
 <p>The resulting data-frame gives the distance along the profile
 (<code>X</code>) and the distance from the profile (<code>Y</code>).</p>
 <p>A quick way to visualize the “transformed” data can be achieved by
