@@ -17,7 +17,5 @@ test_that("Output of functions is as expected", {
   expect_equal(vlength(vec1), 2L)
   expect_equal(vnorm(vec1), t(c(1, 0, 0)))
   expect_equal(vcross(vec1, vec2), t(c(0, 0, 4)))
-  expect_equal(vrotate(vec1, vec2, pi/2), t(c(0, 0, -2)))
+  expect_equal(vrotate(vec1, vec2, pi / 2), t(c(0, 0, -2)))
 })
-
-
