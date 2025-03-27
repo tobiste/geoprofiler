@@ -1,3 +1,4 @@
+library(dplyr)
 data(locations_example)
 p1 <- data.frame(lon = -90.8, lat = 48.6) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
@@ -22,7 +23,7 @@ profile2 <-
   sf::st_sfc(crs = "WGS84")
 
 # profile_coords(test_pt, profile = profile2, azimuth = 90)
-exptd1 <- tibble::tribble(
+exptd1 <- tribble(
   ~X, ~Y,
   45, 0,
   90, 45,
@@ -32,7 +33,7 @@ exptd1 <- tibble::tribble(
 )
 
 # profile_coords(test_pt, profile = profile2, azimuth = -90)
-exptd2 <- tibble::tribble(
+exptd2 <- tribble(
   ~X, ~Y,
   45, 0,
   0, -45,
