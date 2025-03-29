@@ -22,7 +22,8 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 The goal of `{geoprofiler}` is to get distances along and across user-defined 
-profile lines or transects. This is useful when variables depend on distances.
+profile lines or transects. This is useful to visualize the distance-dependency 
+of some variables in the geosciences.
 
 ![](man/figures/fig.png)
 
@@ -106,4 +107,4 @@ minimal code to reproduce the issue.
 
 ## License
 
-MIT License
+GPL-3.0 License

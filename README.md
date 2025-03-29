@@ -10,8 +10,8 @@
 <!-- badges: end -->
 
 The goal of `{geoprofiler}` is to get distances along and across
-user-defined profile lines or transects. This is useful when variables
-depend on distances.
+user-defined profile lines or transects. This is useful to visualize the
+distance-dependency of some variables in the geosciences.
 
 ![](man/figures/fig.png)
 
@@ -63,11 +63,6 @@ Calculate the distances of all points along and across the profile line:
 ``` r
 quakes_profile <- profile_coords(quakes_sf, profile = profile) |>
   dplyr::bind_cols(quakes_sf)
-#> Warning: There was 1 warning in `mutate()`.
-#> ℹ In argument: `across(.fns = deg2rad)`.
-#> Caused by warning:
-#> ! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
-#> ℹ Please supply `.cols` instead.
 ```
 
 Finally, create your profile plot:
@@ -108,4 +103,4 @@ to reproduce the issue.
 
 ## License
 
-MIT License
+GPL-3.0 License

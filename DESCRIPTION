@@ -1,12 +1,11 @@
 Package: geoprofiler
-Title: Distance Along Profile
+Title: Perpendicular Line Transects for Geosciences
 Version: 0.0.2
 Authors@R: 
     person("Tobias", "Stephan", , "tobias.stephan1@yahoo.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9290-014X"))
-Description: Toolset to measures distances along lines defined by a
-    direction or create swath profiles. Also provides functions to create
-    swath profiles. Method are based on Coordinate rotation algortihm by
+Description: Toolset to create perpendicular profile graphs and swath
+    profiles. Method are based on coordinate rotation algorithm by
     Schaeben et al. (2024) <doi:10.1002/mma.9823>.
 License: GPL (>= 3)
 URL: https://tobiste.github.io/geoprofiler/
