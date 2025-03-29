@@ -25,6 +25,10 @@ draw_profile(x, n = 10, ...)
 \item{...}{additional graphics parameters used if \code{type != "n"}
     for plotting the locations.}
 }
+\value{
+\code{sf} object of the profile.
+}
 \description{
-Draw a profile line or a point to retrieve coordinates
+Opens a plot window showing the the map with the data,
+where the user can click profile coordinates.
 }
