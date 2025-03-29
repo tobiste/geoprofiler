@@ -15,6 +15,11 @@ vrotate(x, rotaxis, rotangle)
 numeric 3-column matrix
 }
 \description{
-Vector rotation
+Vector rotation about a given axis and angle after Schaeben et al. (2024)
+}
+\references{
+Schaeben, H., Kroner, U., Stephan, T., 2024. "Mathematical
+fundamentals of spherical kinematics of plate tectonics in terms of
+quaternions". \emph{Math. Methods Appl. Sci.} 47, 4469–4496. \doi{10.1002/mma.9823}
 }
 \keyword{internal}

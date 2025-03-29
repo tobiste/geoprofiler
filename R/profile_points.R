@@ -239,9 +239,15 @@ line_ends <- function(x) {
 
 #' Draw a profile line or a point to retrieve coordinates
 #'
+#' Opens a plot window showing the the map with the data,
+#' where the user can click profile coordinates.
+#'
 #' @param x `sf` object
 #' @inheritParams graphics::locator
 #' @param col color of line or point
+#'
+#' @returns `sf` object of the profile.
+#'
 #' @name draw
 NULL
 

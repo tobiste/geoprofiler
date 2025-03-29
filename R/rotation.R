@@ -41,9 +41,17 @@ vcross <- function(x, y) {
 }
 
 #' Vector rotation
+#'
+#' Vector rotation about a given axis and angle after Schaeben et al. (2024)
+#'
 #' @keywords internal
 #' @param x,rotaxis numeric 3-column matrices representing vectors
 #' @param rotangle numeric. Angle in radians
+#'
+#' @references Schaeben, H., Kroner, U., Stephan, T., 2024. "Mathematical
+#' fundamentals of spherical kinematics of plate tectonics in terms of
+#' quaternions". *Math. Methods Appl. Sci.* 47, 4469–4496. \doi{10.1002/mma.9823}
+#'
 #' @return numeric 3-column matrix
 vrotate <- function(x, rotaxis, rotangle) {
   rotaxis <- vnorm(rotaxis)
