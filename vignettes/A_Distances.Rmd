@@ -111,7 +111,7 @@ data.frame(lon = 160, lat = 15) |>
   profile_points(profile.azimuth = 112, profile.length = set_units(8000, km))
 ```
 > Note that the unit of `profile.length` depends on the coordinate reference 
-system and must be in degree for lon-lat cooridnates and m (km, miles, ...) if 
+system and must be in degree for lon-lat coordinates and m (km, miles, ...) if 
 otherwise.
 
 ### Draw a profile line interactively

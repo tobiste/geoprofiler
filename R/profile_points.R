@@ -11,7 +11,7 @@ interpolate_azimuth <- function(x) {
     coef() |>
     atan() |>
     tectonicr::rad2deg()
-  set_units(azi[2], 'degree')
+  set_units(azi[2], "degree")
 }
 
 #' @importFrom sf st_cast st_coordinates
