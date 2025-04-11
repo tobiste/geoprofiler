@@ -63,8 +63,10 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>You must have R installed on your system (see <a href="https://www.r-project.org/" class="external-link uri">https://www.r-project.org/</a>). To install <a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a> from CRAN, type the following code at the R command line prompt:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tectonicr"</span>)</span></code></pre></div>
+<p>The most recent development version of <a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a> is available from from <a href="https://github.com/" class="external-link">GitHub</a> and can be installed on your system as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"tobiste/geoprofiler"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -72,16 +74,16 @@
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This is a basic example which shows you how to create a profile.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.3.3</span></span></code></pre></div>
 <p>Import example data and transfer them into a <code>sf</code> object:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">quakes</span><span class="op">)</span></span>
 <span><span class="va">quakes_sf</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">quakes</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></code></pre></div>
 <p>Create a profile line from two known points:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">160</span>, <span class="op">-</span><span class="fl">170</span><span class="op">)</span>, lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>, <span class="op">-</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_shift_longitude.html" class="external-link">st_shift_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -90,11 +92,11 @@
 <p>Note: You can also create a profile line by a direction via <code><a href="reference/profile_points.html">profile_points()</a></code></p>
 </blockquote>
 <p>Calculate the distances of all points along and across the profile line:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quakes_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/profile_coords.html">profile_coords</a></span><span class="op">(</span><span class="va">quakes_sf</span>, profile <span class="op">=</span> <span class="va">profile</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">quakes_sf</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, create your profile plot:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">quakes_profile</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">depth</span>, color <span class="op">=</span> <span class="va">mag</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span><span class="st">"Richter magnitude"</span>, option <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -121,6 +123,11 @@
 <h2 id="feedback-issues-and-contributions">Feedback, issues, and contributions<a class="anchor" aria-label="anchor" href="#feedback-issues-and-contributions"></a>
 </h2>
 <p>I welcome feedback, suggestions, issues, and contributions! If you have found a bug, please file it <a href="https://github.com/tobiste/geoprofiler/issues" class="external-link">here</a> with minimal code to reproduce the issue.</p>
+</div>
+<div class="section level2">
+<h2 id="how-to-cite-geoprofiler">How to cite geoprofiler<a class="anchor" aria-label="anchor" href="#how-to-cite-geoprofiler"></a>
+</h2>
+<p>When referencing this package, please cite the package DOI: <a href="https://doi.org/10.32614/CRAN.package.geoprofiler" class="external-link">10.32614/CRAN.package.geoprofiler</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
@@ -164,6 +171,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=geoprofiler" class="external-link"><img src="https://www.r-pkg.org/badges/version/geoprofiler"></a></li>
+<li><a href="https://cran.r-project.org/package=geoprofiler" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/last-month/geoprofiler"></a></li>
 <li><a href="https://github.com/tobiste/geoprofiler/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/tobiste/geoprofiler/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/tobiste/geoprofiler?branch=main" class="external-link"><img src="https://codecov.io/gh/tobiste/geoprofiler/branch/main/graph/badge.svg" alt="codecov"></a></li>
 </ul>
