@@ -27,7 +27,7 @@ You must have R installed on your system (see
 <https://www.r-project.org/>). To install `{geoprofiler}` from CRAN,
 type the following code at the R command line prompt:
 
-    install.packages("tectonicr")
+    install.packages("geoprofiler")
 
 The most recent development version of `{geoprofiler}` is available from
 from [GitHub](https://github.com/) and can be installed on your system

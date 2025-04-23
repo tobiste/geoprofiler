@@ -39,7 +39,7 @@ To install `{geoprofiler}` from CRAN, type the following code at the R
 command line prompt:
 
 ```         
-install.packages("tectonicr")
+install.packages("geoprofiler")
 ```
 
 The most recent development version of `{geoprofiler}` is available from
