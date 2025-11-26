@@ -155,6 +155,4 @@ swath_profile(profile, r, k = 2, dist = 1)
 #> 4 LINESTRING (-139.4855 55.85...
 #> 5 LINESTRING (-138.971 56.714...
 #> 
-swath_profile_fast(profile, r, k = 2, dist = 1)
-#> Error in swath_profile_fast(profile, r, k = 2, dist = 1): could not find function "swath_profile_fast"
 ```
