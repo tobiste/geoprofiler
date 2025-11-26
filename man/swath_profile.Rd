@@ -66,7 +66,6 @@ terra::values(r) <- runif(terra::ncell(r))
 profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 swath_profile(profile, r, k = 2, dist = 1)
-swath_profile_fast(profile, r, k = 2, dist = 1)
 }
 \seealso{
 \code{\link[=swath_stats]{swath_stats()}}

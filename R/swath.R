@@ -30,6 +30,8 @@
 #'  }
 #'
 #' @importFrom stats median quantile sd
+#' @importFrom terra project vect as.lines geom crs extend extract ext
+#' @importFrom sf st_linestring st_sfc st_geometry_type st_transform st_as_sf
 #'
 #' @details The final width of the swath is: \eqn{2k \times  \text{dist}}.
 #'
@@ -49,11 +51,9 @@
 #' profile <- data.frame(lon = c(-140, -90), lat = c(55, 25)) |>
 #'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
 #' swath_profile(profile, r, k = 2, dist = 1)
-#' swath_profile_fast(profile, r, k = 2, dist = 1)
 swath_profile <- function(profile, raster, k = 1, dist,
                           crs = terra::crs(raster),
                           method = c("bilinear", "simple")) {
-
   method <- match.arg(method)
 
   #------------------------------------------------------------#
@@ -63,7 +63,7 @@ swath_profile <- function(profile, raster, k = 1, dist,
 
   # Convert profile to SF line if necessary
   if (inherits(profile, "sf") && all(sf::st_geometry_type(profile) == "LINESTRING")) {
-    profile <- line_ends(profile)       # your function
+    profile <- line_ends(profile) # your function
   } else if (is.matrix(profile)) {
     profile <- sf::st_linestring(profile) |> sf::st_sfc(crs = crs)
   }
@@ -73,12 +73,12 @@ swath_profile <- function(profile, raster, k = 1, dist,
   #------------------------------------------------------------#
   # Geometry — compute perpendicular unit vector (NO trig cases!)
   #------------------------------------------------------------#
-  g  <- terra::geom(profile)[, c("x","y")]   # extract only numeric coords
+  g <- terra::geom(profile)[, c("x", "y")] # extract only numeric coords
   p1 <- g[1, ]
   p2 <- g[2, ]
 
   baseline <- p2 - p1
-  baseline <- baseline / sqrt(sum(baseline^2))      # unit vector
+  baseline <- baseline / sqrt(sum(baseline^2)) # unit vector
 
   # Perpendicular vector
   perp <- c(-baseline[2], baseline[1])
@@ -99,12 +99,12 @@ swath_profile <- function(profile, raster, k = 1, dist,
   # Extend raster *only if necessary*
   #------------------------------------------------------------#
   line_ext <- terra::ext(terra::vect(lines_pts))
-  r_ext    <- terra::ext(raster)
+  r_ext <- terra::ext(raster)
 
-  need_expand <- !(r_ext[1] <= line_ext[1] &&   # xmin
-                     r_ext[2] >= line_ext[2] &&   # xmax
-                     r_ext[3] <= line_ext[3] &&   # ymin
-                     r_ext[4] >= line_ext[4])     # ymax
+  need_expand <- !(r_ext[1] <= line_ext[1] && # xmin
+    r_ext[2] >= line_ext[2] && # xmax
+    r_ext[3] <= line_ext[3] && # ymin
+    r_ext[4] >= line_ext[4]) # ymax
 
   if (need_expand) {
     raster <- terra::extend(raster, line_ext)
@@ -119,18 +119,20 @@ swath_profile <- function(profile, raster, k = 1, dist,
   #------------------------------------------------------------#
   # Vectorized statistics (minimal overhead)
   #------------------------------------------------------------#
-  q <- t(vapply(vals, \(v) quantile(v, c(.25,.50,.75), na.rm = TRUE),
-                numeric(3)))
+  q <- t(vapply(
+    vals, \(v) stats::quantile(v, c(.25, .50, .75), na.rm = TRUE),
+    numeric(3)
+  ))
 
   swath <- cbind(
     distance      = offsets,
     mean          = sapply(vals, mean, na.rm = TRUE),
-    median        = q[,2],
-    sd            = sapply(vals, sd, na.rm = TRUE),
+    median        = q[, 2],
+    sd            = sapply(vals, stats::sd, na.rm = TRUE),
     min           = sapply(vals, min, na.rm = TRUE),
     max           = sapply(vals, max, na.rm = TRUE),
-    quantile25    = q[,1],
-    quantile75    = q[,3]
+    quantile25    = q[, 1],
+    quantile75    = q[, 3]
   )
 
   list(
@@ -244,8 +246,8 @@ swath_profile <- function(profile, raster, k = 1, dist,
 #' @param x list. The return object of [swath_profile()]
 #' @param profile.length numeric or `units` object. If `NULL` the fractional
 #' distance is returned, i.e. 0 at start and 1 at the end of the profile.
-#' @return tibble
-#' @importFrom dplyr c_across everything matches mutate rename rowwise select starts_with ungroup
+#' @return data.frame
+#'
 #' @export
 #'
 #' @seealso [swath_profile()]
@@ -271,28 +273,28 @@ swath_stats <- function(x, profile.length = 1) {
   elevs <- matrix(NA_real_, nrow = max_length, ncol = n)
 
   # fill matrix column-by-column (faster & memory-efficient)
-  for(i in seq_len(n)) {
+  for (i in seq_len(n)) {
     li <- length(data_list[[i]])
     elevs[seq_len(li), i] <- data_list[[i]]
   }
 
   # summary stats by row (fully vectorized via apply)
-  mins   <- apply(elevs, 1, min,    na.rm=TRUE)
-  maxs   <- apply(elevs, 1, max,    na.rm=TRUE)
-  means  <- rowMeans(elevs, na.rm=TRUE)
-  sds    <- apply(elevs, 1, sd,     na.rm=TRUE)
-  meds   <- apply(elevs, 1, median, na.rm=TRUE)
-  q25    <- apply(elevs, 1, quantile, probs=0.25, na.rm=TRUE)
-  q75    <- apply(elevs, 1, quantile, probs=0.75, na.rm=TRUE)
+  mins <- apply(elevs, 1, min, na.rm = TRUE)
+  maxs <- apply(elevs, 1, max, na.rm = TRUE)
+  means <- rowMeans(elevs, na.rm = TRUE)
+  sds <- apply(elevs, 1, sd, na.rm = TRUE)
+  meds <- apply(elevs, 1, median, na.rm = TRUE)
+  q25 <- apply(elevs, 1, quantile, probs = 0.25, na.rm = TRUE)
+  q75 <- apply(elevs, 1, quantile, probs = 0.75, na.rm = TRUE)
 
   # distance scaling
   d <- seq(0, 1, length.out = max_length) * profile.length
 
   # center elevation = median column
-  center_col <- ceiling(n/2)
+  center_col <- ceiling(n / 2)
   center_elev <- elevs[, center_col]
 
-  tibble(
+  data.frame(
     distance     = d,
     elevation    = center_elev,
     min          = mins,

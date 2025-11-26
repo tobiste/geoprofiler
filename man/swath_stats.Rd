@@ -13,7 +13,7 @@ swath_stats(x, profile.length = 1)
 distance is returned, i.e. 0 at start and 1 at the end of the profile.}
 }
 \value{
-tibble
+data.frame
 }
 \description{
 Statistics of the elevation data across a swath profile.
