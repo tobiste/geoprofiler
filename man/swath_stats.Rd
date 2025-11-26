@@ -4,7 +4,7 @@
 \alias{swath_stats}
 \title{Summary Statistics on Swath Elevation Profile}
 \usage{
-swath_stats(x, profile.length = NULL)
+swath_stats(x, profile.length = 1)
 }
 \arguments{
 \item{x}{list. The return object of \code{\link[=swath_profile]{swath_profile()}}}
