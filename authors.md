@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/tobiste/geoprofiler/blob/main/DESCRIPTION)
 
 Stephan T (2025). *geoprofiler: Perpendicular Line Transects for
-Geosciences*. R package version 0.0.2.9002,
+Geosciences*. R package version 0.0.3,
 <https://tobiste.github.io/geoprofiler/>.
 
     @Manual{,
       title = {geoprofiler: Perpendicular Line Transects for Geosciences},
       author = {Tobias Stephan},
       year = {2025},
-      note = {R package version 0.0.2.9002},
+      note = {R package version 0.0.3},
       url = {https://tobiste.github.io/geoprofiler/},
     }
