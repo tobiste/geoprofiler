@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">geoprofiler</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
                         <h4 data-toc-skip class="author">Tobias
 Stephan</h4>
             
-            <h4 data-toc-skip class="date">2025-12-11</h4>
+            <h4 data-toc-skip class="date">2026-01-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tobiste/geoprofiler/blob/main/vignettes/A_Distances.Rmd" class="external-link"><code>vignettes/A_Distances.Rmd</code></a></small>
       <div class="d-none name"><code>A_Distances.Rmd</code></div>
@@ -110,7 +110,7 @@ events of MB &gt; 4.0. The events occurred in a cube near Fiji since
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size_binned</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">quake_map</span></span></code></pre></div>
-<p><img src="A_Distances_files/figure-html/load_data-1.png" class="r-plt" width="700"></p>
+<p><img src="A_Distances_files/figure-html/load_data-1.png" class="r-plt" alt="" width="700"></p>
 <blockquote>
 <p>Transform your dataset into a projected coordinate reference system
 to deal with units such as m, km, miles etc. Otherwise the units will be
@@ -138,7 +138,7 @@ map:</p>
 <span></span>
 <span><span class="va">quake_map</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">profile_l</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="A_Distances_files/figure-html/line-1.png" class="r-plt" width="700"></p>
+<p><img src="A_Distances_files/figure-html/line-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_azimuth.html">profile_azimuth</a></span><span class="op">(</span><span class="va">profile_l</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 112.3832 [°]</span></span>
@@ -201,7 +201,7 @@ plotting these axes against each other::</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3000</span>, <span class="fl">250</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3000</span>, <span class="fl">3000</span>, <span class="fl">250</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="A_Distances_files/figure-html/profile_map-1.png" class="r-plt" width="700"></p>
+<p><img src="A_Distances_files/figure-html/profile_map-1.png" class="r-plt" alt="" width="700"></p>
 <p>In this plot the profile line is a horizontal line (<code>X=0</code>)
 and the start point of the profile has the coordinates <code>X=0</code>
 and <code>Y=0</code>.</p>
@@ -228,7 +228,7 @@ desired number).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3000</span>, <span class="fl">250</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3000</span>, <span class="fl">3000</span>, <span class="fl">250</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="A_Distances_files/figure-html/shift-1.png" class="r-plt" width="700"></p>
+<p><img src="A_Distances_files/figure-html/shift-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="filtering-the-data">Filtering the data<a class="anchor" aria-label="anchor" href="#filtering-the-data"></a>
@@ -254,7 +254,7 @@ plotting data points that are too far away from the profile:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html" class="external-link">guide_axis</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Distance along profile (km)"</span>, y <span class="op">=</span> <span class="st">"Depth (km)"</span>, color <span class="op">=</span> <span class="st">"Depth (km)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="A_Distances_files/figure-html/profile_plot1-1.png" class="r-plt" width="700"></p>
+<p><img src="A_Distances_files/figure-html/profile_plot1-1.png" class="r-plt" alt="" width="700"></p>
 <p>One way to show the distance from the profile in the same plot is by
 controlling the size (and/or the opacity) of the points. Here I am using
 the unfiltered data, and show the closest points much larger than the
@@ -271,7 +271,7 @@ more distant points. This gives a somewhat 3-dimensional look to it:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html" class="external-link">guide_axis</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Distance along profile (km)"</span>, y <span class="op">=</span> <span class="st">"Depth (km)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="A_Distances_files/figure-html/profile_plot2-1.png" class="r-plt" width="700"></p>
+<p><img src="A_Distances_files/figure-html/profile_plot2-1.png" class="r-plt" alt="" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

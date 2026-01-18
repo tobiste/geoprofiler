@@ -15,7 +15,7 @@ and points have to be the same."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">geoprofiler</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,7 @@ row</p><dl><dt>column 1</dt>
 
 
 <dt id="arg-dist">dist<a class="anchor" aria-label="anchor" href="#arg-dist"></a></dt>
-<dd><p>numeric. distance between lines</p></dd>
+<dd><p>numeric. distance between lines. Unit depends on reference system specified by <code>crs</code> (see note).</p></dd>
 
 
 <dt id="arg-crs">crs<a class="anchor" aria-label="anchor" href="#arg-crs"></a></dt>
@@ -127,6 +127,13 @@ raster along each line</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The final width of the swath is: \(2k \times  \text{dist}\).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>The unit of <code>dist</code> depends on the coordinate reference system specified
+in <code>crs</code> (which uses the coordinate system of <code>raster</code> by default). This means,
+a geographic coordinates system (e.g. WGS84) assumes units in degrees,
+while a projected coordinate system (e.g. UTM) assumes meters.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

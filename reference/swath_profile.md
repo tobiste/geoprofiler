@@ -51,7 +51,8 @@ The algorithm is a modified version of "swathR" by Vincent Haburaj
 
 - dist:
 
-  numeric. distance between lines
+  numeric. distance between lines. Unit depends on reference system
+  specified by `crs` (see note).
 
 - crs:
 
@@ -85,6 +86,13 @@ list.
 ## Details
 
 The final width of the swath is: \\2k \times \text{dist}\\.
+
+## Note
+
+The unit of `dist` depends on the coordinate reference system specified
+in `crs` (which uses the coordinate system of `raster` by default). This
+means, a geographic coordinates system (e.g. WGS84) assumes units in
+degrees, while a projected coordinate system (e.g. UTM) assumes meters.
 
 ## See also
 
