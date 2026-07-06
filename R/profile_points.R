@@ -143,7 +143,7 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #'   profile_line()
 profile_line <- function(x) {
   if(npts(x) > 2){
-    cat("Best-fit profile-line using linear regression")
+    cat("Best-fit profile-line using linear regression\n")
     res <- bestfit_profile(x)
     rsq <- res$r.squared
     cat(paste("R-squared:", signif(rsq)))
