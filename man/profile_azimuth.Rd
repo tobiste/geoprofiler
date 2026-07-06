@@ -32,5 +32,9 @@ profile_points(p1,
   profile_azimuth()
 }
 \seealso{
-\code{\link[=profile_length]{profile_length()}}
+Other profile: 
+\code{\link{profile-coords}},
+\code{\link{profile_line}()},
+\code{\link{profile_points}()}
 }
+\concept{profile}

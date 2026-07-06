@@ -7,7 +7,9 @@
 profile_line(x)
 }
 \arguments{
-\item{x}{\code{sf} point object}
+\item{x}{\code{sf} point object. If \code{x} only contains 2 points, then the line will
+be the connection between these points. If there are more points, then a
+best-fit line will be determined using linear regression of all points.}
 }
 \value{
 \code{sf} line object
@@ -25,5 +27,9 @@ profile_points(p1,
   profile_line()
 }
 \seealso{
-\code{\link[=profile_points]{profile_points()}}
+Other profile: 
+\code{\link{profile-coords}},
+\code{\link{profile_azimuth}()},
+\code{\link{profile_points}()}
 }
+\concept{profile}

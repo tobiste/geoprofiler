@@ -75,12 +75,12 @@ profile <- data.frame(lon = c(160, -170), lat = c(-15, -30)) |>
   profile_line()
 ```
 
-> Note: You can also create a profile line by a direction via `profile_points()`
+> Note: You can also create a profile line by a direction via `geoprofiler()`
 
 Calculate the distances of all points along and across the profile line:
 
 ```{r cooridnates}
-quakes_profile <- profile_coords(quakes_sf, profile = profile) |>
+quakes_profile <- geoprofiler(quakes_sf, profile = profile) |>
   dplyr::bind_cols(quakes_sf)
 ```
 
