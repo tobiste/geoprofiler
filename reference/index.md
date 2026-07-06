@@ -17,11 +17,12 @@
 - [`point_distance()`](https://tobiste.github.io/geoprofiler/reference/point_distance.md)
   : Distance Between Points
 
+- [`geoprofiler()`](https://tobiste.github.io/geoprofiler/reference/profile-coords.md)
+  [`profile_coords()`](https://tobiste.github.io/geoprofiler/reference/profile-coords.md)
+  : Profile Coordinates
+
 - [`profile_azimuth()`](https://tobiste.github.io/geoprofiler/reference/profile_azimuth.md)
   : Azimuth Between Profile Points
-
-- [`profile_coords()`](https://tobiste.github.io/geoprofiler/reference/profile_coords.md)
-  : Profile Coordinates
 
 - [`profile_length()`](https://tobiste.github.io/geoprofiler/reference/profile_length.md)
   : Length of Profile

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Perpendicular Line Transects for Geosciences • geoprofiler</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Perpendicular Line Transects for Geosciences">
 <meta name="description" content="Toolset to create perpendicular profile graphs and swath profiles. Method are based on coordinate rotation algorithm by Schaeben et al. (2024) &lt;doi:10.1002/mma.9823&gt;.">
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">geoprofiler</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tobiste.github.io/geoprofiler/">geoprofiler</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.3.3</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.5.2</span></span></code></pre></div>
 <p>Import example data and transfer them into a <code>sf</code> object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">quakes</span><span class="op">)</span></span>
@@ -90,11 +90,11 @@
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_shift_longitude.html" class="external-link">st_shift_longitude</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/profile_line.html">profile_line</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <blockquote>
-<p>Note: You can also create a profile line by a direction via <code><a href="reference/profile_points.html">profile_points()</a></code></p>
+<p>Note: You can also create a profile line by a direction via <code><a href="reference/profile-coords.html">geoprofiler()</a></code></p>
 </blockquote>
 <p>Calculate the distances of all points along and across the profile line:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">quakes_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/profile_coords.html">profile_coords</a></span><span class="op">(</span><span class="va">quakes_sf</span>, profile <span class="op">=</span> <span class="va">profile</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">quakes_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/profile-coords.html">geoprofiler</a></span><span class="op">(</span><span class="va">quakes_sf</span>, profile <span class="op">=</span> <span class="va">profile</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">quakes_sf</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, create your profile plot:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">

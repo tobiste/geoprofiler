@@ -27,7 +27,10 @@ coordinate reference frame given by `profile`.
 
 ## See also
 
-[`profile_length()`](https://tobiste.github.io/geoprofiler/reference/profile_length.md)
+Other profile:
+[`profile-coords`](https://tobiste.github.io/geoprofiler/reference/profile-coords.md),
+[`profile_line()`](https://tobiste.github.io/geoprofiler/reference/profile_line.md),
+[`profile_points()`](https://tobiste.github.io/geoprofiler/reference/profile_points.md)
 
 ## Examples
 

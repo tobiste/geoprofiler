@@ -12,7 +12,10 @@ profile_line(x)
 
 - x:
 
-  `sf` point object
+  `sf` point object. If `x` only contains 2 points, then the line will
+  be the connection between these points. If there are more points, then
+  a best-fit line will be determined using linear regression of all
+  points.
 
 ## Value
 
@@ -20,6 +23,9 @@ profile_line(x)
 
 ## See also
 
+Other profile:
+[`profile-coords`](https://tobiste.github.io/geoprofiler/reference/profile-coords.md),
+[`profile_azimuth()`](https://tobiste.github.io/geoprofiler/reference/profile_azimuth.md),
 [`profile_points()`](https://tobiste.github.io/geoprofiler/reference/profile_points.md)
 
 ## Examples

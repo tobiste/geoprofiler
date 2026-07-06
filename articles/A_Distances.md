@@ -6,6 +6,7 @@ values against the profile distance by using the functionality of
 [geoprofiler](https://tobiste.github.io/geoprofiler/).
 
 ``` r
+
 # Load packages required for this tutorial:
 library(geoprofiler)
 library(ggplot2)
@@ -25,6 +26,7 @@ If you have a shape file for example, simply import it into R using the
 function
 
 ``` r
+
 my_data <- sf::read_sf("path/to/my/file.shp")
 ```
 
@@ -33,6 +35,7 @@ package) giving the locations of 1000 seismic events of MB \> 4.0. The
 events occurred in a cube near Fiji since 1964.
 
 ``` r
+
 data("quakes")
 crs <- st_crs("EPSG:3460") # coordinate reference system for projection
 
@@ -64,6 +67,7 @@ or what is more relevant.
 For example, if the profile should be a line connecting two points:
 
 ``` r
+
 profile_pts <- data.frame(lon = c(160, -170), lat = c(-15, -24)) |>
   st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |> # convert to sf object
   st_transform(crs = crs) # transform to projected coordinates
@@ -72,6 +76,7 @@ profile_pts <- data.frame(lon = c(160, -170), lat = c(-15, -24)) |>
 Combine the two points to a line and add the profile line to the map:
 
 ``` r
+
 profile_l <- profile_line(profile_pts)
 
 quake_map +
@@ -81,6 +86,7 @@ quake_map +
 ![](A_Distances_files/figure-html/line-1.png)
 
 ``` r
+
 profile_azimuth(profile_l)
 #> 112.3832 [°]
 profile_length(profile_l)
@@ -93,6 +99,7 @@ Or, if the orientation of the profile is more relevant, we can define
 the profile by the direction and distance from one point:
 
 ``` r
+
 data.frame(lon = 160, lat = 15) |>
   st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |>
   st_transform(crs = crs) |>
@@ -117,6 +124,7 @@ You can also just define a profile by clicking or drawing points on the
 map:
 
 ``` r
+
 draw_profile(quakes_sf, n = 3)
 ```
 
@@ -126,7 +134,8 @@ To calculate the distances along and across the profile, we simply
 transform the data into a coordinate system of the profile line:
 
 ``` r
-quakes_profile <- profile_coords(quakes_sf, profile = profile_l) |>
+
+quakes_profile <- geoprofiler(quakes_sf, profile = profile_l) |>
   bind_cols(quakes_sf)
 ```
 
@@ -137,6 +146,7 @@ A quick way to visualize the “transformed” data can be achieved by
 plotting these axes against each other::
 
 ``` r
+
 quakes_profile |>
   # divide by 1000 for km:
   mutate(X = X / 1000, Y = Y / 1000) |>
@@ -164,6 +174,7 @@ subtract the desired shift (to move it “down”, we would need to add the
 desired number).
 
 ``` r
+
 quakes_profile_shifted <- quakes_profile |>
   mutate(
     X = X / 1000, # in km
@@ -187,6 +198,7 @@ This plot also allows to easily make a subset of our data to avoid
 plotting data points that are too far away from the profile:
 
 ``` r
+
 quakes_profile_filtered <- filter(
   quakes_profile_shifted,
   abs(Y) <= 750,
@@ -199,6 +211,7 @@ quakes_profile_filtered <- filter(
 Finally, we plot our filtered data against the profile:
 
 ``` r
+
 ggplot(quakes_profile_filtered, aes(X, depth, color = depth, size = mag)) +
   geom_point() +
   scale_size_binned("Richter Magnitude") +
@@ -215,6 +228,7 @@ the unfiltered data, and show the closest points much larger than the
 more distant points. This gives a somewhat 3-dimensional look to it:
 
 ``` r
+
 quakes_profile_shifted |>
   arrange(desc(abs(Y))) |> # sort data to have close datapoints in foreground
   ggplot(aes(X, depth, color = mag, size = abs(Y), alpha = abs(Y))) +

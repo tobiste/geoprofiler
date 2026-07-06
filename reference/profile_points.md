@@ -49,6 +49,13 @@ Use metric values (meters, kilometers, etc) in case of a projected
 coordinate reference frame, and degree when geographical coordinate
 reference frame.
 
+## See also
+
+Other profile:
+[`profile-coords`](https://tobiste.github.io/geoprofiler/reference/profile-coords.md),
+[`profile_azimuth()`](https://tobiste.github.io/geoprofiler/reference/profile_azimuth.md),
+[`profile_line()`](https://tobiste.github.io/geoprofiler/reference/profile_line.md)
+
 ## Examples
 
 ``` r

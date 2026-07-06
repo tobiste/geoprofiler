@@ -10,6 +10,7 @@ statistical parameters (e.g. mean, standard deviation, …) for the
 elevation in the nearby area.
 
 ``` r
+
 # Load packages required for this tutorial:
 library(geoprofiler)
 library(ggplot2)
@@ -30,6 +31,7 @@ object. If you have a GeoTiff for example, simply import it into R using
 the function
 
 ``` r
+
 my_raster <- terra::rast("path/to/my/file.tif")
 ```
 
@@ -37,6 +39,7 @@ For this tutorial we use an example data set that is an snippet of the
 ETOPO dataset.
 
 ``` r
+
 data("raster_example")
 crs <- "EPSG:26915" # coordinate reference system for projection
 
@@ -56,6 +59,7 @@ elevation_map
 We can define the profile by the direction and distance from one point:
 
 ``` r
+
 my_profile <- data.frame(lon = -90.75, lat = 48.61) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84") |>
   profile_points(
@@ -93,6 +97,7 @@ Here, we want to have `k=10` lines on both sides of the profile, spaced
 by `dist=300` meters:
 
 ``` r
+
 swath <- swath_profile(my_profile, raster = my_raster, k = 5, dist = 1000)
 ```
 
@@ -100,13 +105,14 @@ The output is a list that contains the extracted elevation data and also
 the generated swath lines:
 
 ``` r
+
 elevation_map +
   geom_sf(data = swath$lines, lwd = .1)
 ```
 
 ![](B_Swath_files/figure-html/swath_map-1.png) \> Note that the width of
-the swath profile is $2k \times \text{dist}$. In our example, the width
-is 10.000 (m).
+the swath profile is $`2k \times \text{dist}`$. In our example, the
+width is 10.000 (m).
 
 Next, we calculate some summary statistics of the elevation across the
 swath, such as min/max, mean and standard deviation using the function
@@ -116,6 +122,7 @@ We can plug in the length of the profile by specifying the parameter
 [`profile_length()`](https://tobiste.github.io/geoprofiler/reference/profile_length.md).
 
 ``` r
+
 my_swath_profile <- swath_stats(swath, profile.length = profile_length(my_profile))
 ```
 
@@ -125,6 +132,7 @@ Finally, we can plot the elevation along the profile and add some of the
 calculated statistics:
 
 ``` r
+
 ggplot(my_swath_profile, aes(distance, elevation)) +
   geom_ribbon(aes(ymin = min, ymax = max), fill = "grey90") +
   geom_ribbon(aes(ymin = quantile25, ymax = quantile75), fill = "grey80") +
