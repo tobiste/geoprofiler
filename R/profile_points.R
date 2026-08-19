@@ -158,7 +158,7 @@ profile_line <- function(x) {
     cat("Best-fit profile-line using linear regression\n")
     res <- bestfit_profile(x)
     rsq <- res$r.squared
-    cat(paste("R-squared:", signif(rsq)))
+    cat(paste("R-squared:", signif(rsq), "\n"))
     x <- res$profile
   }
   sf::st_combine(x) |>
