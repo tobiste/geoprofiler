@@ -54,10 +54,9 @@ y <- 2*x + 10
 noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
 noisy_y <- y + noise
 pts2 <- data.frame(x = x, y = noisy_y) |>
-  st_as_sf(coords = c('x', 'y'))
-#> Error in st_as_sf(data.frame(x = x, y = noisy_y), coords = c("x", "y")): could not find function "st_as_sf"
+  sf::st_as_sf(coords = c('x', 'y'))
 
 ## Extract line
-profile_azimuth(pts)
-#> Error: object 'pts' not found
+profile_azimuth(pts2)
+#> 63.91786 [°]
 ```

@@ -55,10 +55,16 @@ y <- 2*x + 10
 noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
 noisy_y <- y + noise
 pts2 <- data.frame(x = x, y = noisy_y) |>
-  st_as_sf(coords = c('x', 'y'))
-#> Error in st_as_sf(data.frame(x = x, y = noisy_y), coords = c("x", "y")): could not find function "st_as_sf"
+  sf::st_as_sf(coords = c('x', 'y'))
 
 ## Extract line
-profile_line(pts)
-#> Error: object 'pts' not found
+profile_line(pts2)
+#> Best-fit profile-line using linear regression
+#> R-squared: 0.966991 
+#> Geometry set for 1 feature 
+#> Geometry type: LINESTRING
+#> Dimension:     XY
+#> Bounding box:  xmin: 0.005205289 ymin: 9.979017 xmax: 0.9936245 ymax: 11.99822
+#> CRS:           NA
+#> LINESTRING (0.005205289 9.979017, 0.9936245 11....
 ```
