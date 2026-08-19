@@ -38,7 +38,7 @@ pts2 <- data.frame(x = x, y = noisy_y) |>
   sf::st_as_sf(coords = c('x', 'y'))
 
 ## Extract line
-profile_line(pts)
+profile_line(pts2)
 }
 \seealso{
 Other profile: 

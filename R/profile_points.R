@@ -152,7 +152,7 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #'   sf::st_as_sf(coords = c('x', 'y'))
 #'
 #' ## Extract line
-#' profile_line(pts)
+#' profile_line(pts2)
 profile_line <- function(x) {
   if(npts(x) > 2){
     cat("Best-fit profile-line using linear regression\n")
@@ -206,7 +206,7 @@ profile_line <- function(x) {
 #'   sf::st_as_sf(coords = c('x', 'y'))
 #'
 #' ## Extract line
-#' profile_azimuth(pts)
+#' profile_azimuth(pts2)
 profile_azimuth <- function(x) {
   if (npts(x) > 2) {
     interpolate_azimuth(x)

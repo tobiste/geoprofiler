@@ -42,7 +42,7 @@ pts2 <- data.frame(x = x, y = noisy_y) |>
   sf::st_as_sf(coords = c('x', 'y'))
 
 ## Extract line
-profile_azimuth(pts)
+profile_azimuth(pts2)
 }
 \seealso{
 Other profile: 
