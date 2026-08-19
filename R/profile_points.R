@@ -149,7 +149,7 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #' noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
 #' noisy_y <- y + noise
 #' pts2 <- data.frame(x = x, y = noisy_y) |>
-#'   st_as_sf(coords = c('x', 'y'))
+#'   sf::st_as_sf(coords = c('x', 'y'))
 #'
 #' ## Extract line
 #' profile_line(pts)
@@ -203,7 +203,7 @@ profile_line <- function(x) {
 #' noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
 #' noisy_y <- y + noise
 #' pts2 <- data.frame(x = x, y = noisy_y) |>
-#'   st_as_sf(coords = c('x', 'y'))
+#'   sf::st_as_sf(coords = c('x', 'y'))
 #'
 #' ## Extract line
 #' profile_azimuth(pts)

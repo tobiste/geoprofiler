@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/tobiste/geoprofiler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tobiste/geoprofiler?branch=main)
 <!-- badges: end -->
 
-The goal of `{geoprofiler}` is to get distances along and across user-defined 
+The goal of `{geoprofiler}` is to get accurate distances along and across user-defined 
 profile lines or transects. This is useful to visualize the distance-dependency 
 of some variables in the geosciences.
 
