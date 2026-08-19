@@ -151,44 +151,44 @@ while a projected coordinate system (e.g. UTM) assumes meters.</p>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">swath_profile</span><span class="op">(</span><span class="va">profile</span>, <span class="va">r</span>, k <span class="op">=</span> <span class="fl">2</span>, dist <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $swath</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       distance      mean    median        sd       min       max quantile25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1       -2 0.4590701 0.4745807 0.1073198 0.2613481 0.6733179  0.4035579</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1       -1 0.4729833 0.4900782 0.1175709 0.2613481 0.6733179  0.3944666</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1        0 0.4861382 0.4843019 0.1315223 0.2613481 0.7434251  0.4053778</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1        1 0.5193847 0.5047430 0.1157125 0.2986234 0.7434251  0.4610370</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1        2 0.5188714 0.5354328 0.1226090 0.2986234 0.7434251  0.4610370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       distance      mean    median         sd       min       max quantile25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1       -2 0.5753769 0.5334707 0.13374968 0.3404439 0.8128922  0.5059782</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1       -1 0.5858479 0.5944543 0.13195738 0.3404439 0.8128922  0.5128061</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1        0 0.5635845 0.5479863 0.12693203 0.3404439 0.8128922  0.4932966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1        1 0.5587202 0.5628497 0.09400815 0.3942108 0.7455875  0.5008554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1        2 0.5808190 0.5881592 0.10697175 0.3942108 0.7455875  0.5008554</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       quantile75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.5320362</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.5409959</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.5411026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.5776294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.5807059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.6835217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.6835217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.6149577</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.5994903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lyr.1  0.6493043</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4745807 0.4435484 0.4067186 0.4900782 0.5542827 0.5465590 0.2986234</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.6733179 0.3514926 0.5354328 0.4003972 0.4162889 0.5047430 0.5286397</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.2613481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3404439 0.3942108 0.5084438 0.5628497 0.7272036 0.4741889 0.5331228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.7455875 0.8128922 0.6055835 0.5334707 0.5220996 0.5035126 0.7239631</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.6430803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4745807 0.4435484 0.3726443 0.4900782 0.5542827 0.5465590 0.2986234</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.6733179 0.3514926 0.5354328 0.6431701 0.4162889 0.5047430 0.5286397</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.2613481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.3404439 0.3942108 0.5944543 0.5628497 0.7272036 0.4741889 0.5331228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.7455875 0.8128922 0.6055835 0.6045263 0.5220996 0.5035126 0.7239631</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.6430803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5367092 0.4745807 0.4435484 0.3726443 0.4900782 0.5542827 0.4785257</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2986234 0.6733179 0.3514926 0.5354328 0.6431701 0.4162889 0.5047430</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.7434251 0.2613481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4981982 0.3404439 0.3942108 0.5944543 0.5628497 0.7272036 0.4509949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.5331228 0.7455875 0.8128922 0.6055835 0.6045263 0.5220996 0.5035126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4785917 0.6430803</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5367092 0.4990050 0.4435484 0.3726443 0.4900782 0.5542827 0.4785257</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2986234 0.6733179 0.6009761 0.5354328 0.6431701 0.4162889 0.5047430</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.7434251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4981982 0.5717082 0.3942108 0.5944543 0.5628497 0.7272036 0.4509949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.5331228 0.7455875 0.5881592 0.6055835 0.6045263 0.5220996 0.5035126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4785917</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $data$lyr.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.5367092 0.4990050 0.4435484 0.3726443 0.3382311 0.5542827 0.4785257</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.2986234 0.6733179 0.6009761 0.5354328 0.6431701 0.5604357 0.5047430</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.7434251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.4981982 0.5717082 0.3942108 0.5944543 0.6930251 0.7272036 0.4509949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.5331228 0.7455875 0.5881592 0.6055835 0.6045263 0.7234066 0.5035126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4785917</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $lines</span>
@@ -215,7 +215,7 @@ while a projected coordinate system (e.g. UTM) assumes meters.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -71,20 +71,36 @@ best-fit line will be determined using linear regression of all points.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="op">-</span><span class="fl">90.8</span>, lat <span class="op">=</span> <span class="fl">48.6</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create a line from a point and a azimuth</span></span></span>
+<span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="op">-</span><span class="fl">90.8</span>, lat <span class="op">=</span> <span class="fl">48.6</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lon"</span>, <span class="st">"lat"</span><span class="op">)</span>, crs <span class="op">=</span> <span class="st">"WGS84"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="profile_points.html">profile_points</a></span><span class="op">(</span><span class="va">p1</span>,</span></span>
+<span class="r-in"><span><span class="va">pts1</span> <span class="op">&lt;-</span> <span class="fu"><a href="profile_points.html">profile_points</a></span><span class="op">(</span><span class="va">p1</span>,</span></span>
 <span class="r-in"><span>  profile.azimuth <span class="op">=</span> <span class="fl">135</span>, profile.length <span class="op">=</span> <span class="fl">10000</span>,</span></span>
 <span class="r-in"><span>  crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">"EPSG:26915"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">profile_line</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unit of profile.length not specified. Assuming unit is in meters.</span>
+<span class="r-in"><span><span class="fu">profile_line</span><span class="op">(</span><span class="va">pts1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry set for 1 feature </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: LINESTRING</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 662193.2 ymin: 5378256 xmax: 669264.3 ymax: 5385328</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: NAD83 / UTM zone 15N</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> LINESTRING (662193.2 5385328, 669264.3 5378256)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create a line from fitting set of points</span></span></span>
+<span class="r-in"><span><span class="co">## Create 100 random points</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">20250411</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="va">x</span> <span class="op">+</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">noisy_y</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">+</span> <span class="va">noise</span></span></span>
+<span class="r-in"><span><span class="va">pts2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">noisy_y</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">st_as_sf</span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="st">'y'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in st_as_sf(data.frame(x = x, y = noisy_y), coords = c("x", "y")):</span> could not find function "st_as_sf"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Extract line</span></span></span>
+<span class="r-in"><span><span class="fu">profile_line</span><span class="op">(</span><span class="va">pts</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'pts' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -96,7 +112,7 @@ best-fit line will be determined using linear regression of all points.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

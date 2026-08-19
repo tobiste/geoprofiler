@@ -45,4 +45,19 @@ profile_points(p1,
   profile_azimuth()
 #> Warning: Unit of profile.length not specified. Assuming unit is in meters.
 #> 136.7341 [°]
+
+# Azimuth of a line-fit for a set of points
+## Create 100 random points
+set.seed(20250411)
+x <- runif(100)
+y <- 2*x + 10
+noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
+noisy_y <- y + noise
+pts2 <- data.frame(x = x, y = noisy_y) |>
+  st_as_sf(coords = c('x', 'y'))
+#> Error in st_as_sf(data.frame(x = x, y = noisy_y), coords = c("x", "y")): could not find function "st_as_sf"
+
+## Extract line
+profile_azimuth(pts)
+#> Error: object 'pts' not found
 ```

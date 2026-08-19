@@ -86,6 +86,21 @@ interpolation in the coordinate reference frame given by <code>profile</code>.</
 <span class="r-in"><span>  <span class="fu">profile_azimuth</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unit of profile.length not specified. Assuming unit is in meters.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 136.7341 [°]</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Azimuth of a line-fit for a set of points</span></span></span>
+<span class="r-in"><span><span class="co">## Create 100 random points</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">20250411</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="va">x</span> <span class="op">+</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">noisy_y</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">+</span> <span class="va">noise</span></span></span>
+<span class="r-in"><span><span class="va">pts2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">noisy_y</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">st_as_sf</span><span class="op">(</span>coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="st">'y'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in st_as_sf(data.frame(x = x, y = noisy_y), coords = c("x", "y")):</span> could not find function "st_as_sf"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Extract line</span></span></span>
+<span class="r-in"><span><span class="fu">profile_azimuth</span><span class="op">(</span><span class="va">pts</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'pts' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -97,7 +112,7 @@ interpolation in the coordinate reference frame given by <code>profile</code>.</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

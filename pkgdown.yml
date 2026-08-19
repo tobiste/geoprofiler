@@ -1,10 +1,10 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   A_Distances: A_Distances.html
   B_Swath: B_Swath.html
-last_built: 2026-07-06T19:37Z
+last_built: 2026-08-19T16:06Z
 urls:
   reference: https://tobiste.github.io/geoprofiler/reference
   article: https://tobiste.github.io/geoprofiler/articles
