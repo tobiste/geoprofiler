@@ -18,13 +18,27 @@ best-fit line will be determined using linear regression of all points.}
 Combine Points to a Line
 }
 \examples{
+# Create a line from a point and a azimuth
 p1 <- data.frame(lon = -90.8, lat = 48.6) |>
   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-profile_points(p1,
+pts1 <- profile_points(p1,
   profile.azimuth = 135, profile.length = 10000,
   crs = sf::st_crs("EPSG:26915")
-) |>
-  profile_line()
+)
+profile_line(pts1)
+
+# Create a line from fitting set of points
+## Create 100 random points
+set.seed(20250411)
+x <- runif(100)
+y <- 2*x + 10
+noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
+noisy_y <- y + noise
+pts2 <- data.frame(x = x, y = noisy_y) |>
+  st_as_sf(coords = c('x', 'y'))
+
+## Extract line
+profile_line(pts)
 }
 \seealso{
 Other profile: 

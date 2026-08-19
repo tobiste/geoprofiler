@@ -37,8 +37,6 @@ bestfit_profile <- function(x){
   new <- data.frame(X = xvals)
   yvals <- predict(xy.lm, new)
 
-
-
   profile <- data.frame(X = xvals, Y = yvals) |>
     st_as_sf(coords = c(1,2), crs = st_crs(x))
 
@@ -134,24 +132,37 @@ profile_points <- function(start, profile.azimuth, profile.length, crs = st_crs(
 #' @family profile
 #'
 #' @examples
+#' # Create a line from a point and a azimuth
 #' p1 <- data.frame(lon = -90.8, lat = 48.6) |>
 #'   sf::st_as_sf(coords = c("lon", "lat"), crs = "WGS84")
-#' profile_points(p1,
+#' pts1 <- profile_points(p1,
 #'   profile.azimuth = 135, profile.length = 10000,
 #'   crs = sf::st_crs("EPSG:26915")
-#' ) |>
-#'   profile_line()
+#' )
+#' profile_line(pts1)
+#'
+#' # Create a line from fitting set of points
+#' ## Create 100 random points
+#' set.seed(20250411)
+#' x <- runif(100)
+#' y <- 2*x + 10
+#' noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
+#' noisy_y <- y + noise
+#' pts2 <- data.frame(x = x, y = noisy_y) |>
+#'   st_as_sf(coords = c('x', 'y'))
+#'
+#' ## Extract line
+#' profile_line(pts)
 profile_line <- function(x) {
   if(npts(x) > 2){
     cat("Best-fit profile-line using linear regression\n")
     res <- bestfit_profile(x)
     rsq <- res$r.squared
     cat(paste("R-squared:", signif(rsq)))
-    return(res$profile)
-  } else {
+    x <- res$profile
+  }
   sf::st_combine(x) |>
     sf::st_cast("LINESTRING")
-  }
 }
 
 
@@ -183,6 +194,19 @@ profile_line <- function(x) {
 #'   crs = sf::st_crs("EPSG:26915")
 #' ) |>
 #'   profile_azimuth()
+#'
+#' # Azimuth of a line-fit for a set of points
+#' ## Create 100 random points
+#' set.seed(20250411)
+#' x <- runif(100)
+#' y <- 2*x + 10
+#' noise <- rnorm(n = length(y), mean = 0, sd = 0.1)
+#' noisy_y <- y + noise
+#' pts2 <- data.frame(x = x, y = noisy_y) |>
+#'   st_as_sf(coords = c('x', 'y'))
+#'
+#' ## Extract line
+#' profile_azimuth(pts)
 profile_azimuth <- function(x) {
   if (npts(x) > 2) {
     interpolate_azimuth(x)
