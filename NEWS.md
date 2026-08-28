@@ -1,4 +1,4 @@
-# geoprofiler (development version)
+# geoprofiler 0.0.4
 
 # geoprofiler 0.0.3.9002 *2026_07_06*
 
