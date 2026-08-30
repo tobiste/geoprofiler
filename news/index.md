@@ -1,5 +1,7 @@
 # Changelog
 
+## geoprofiler (development version)
+
 ## geoprofiler 0.0.4 *2026-08-28*
 
 CRAN release: 2026-08-28
