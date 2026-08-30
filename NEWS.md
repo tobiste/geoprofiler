@@ -1,3 +1,5 @@
+# geoprofiler (development version)
+
 # geoprofiler 0.0.4 _2026-08-28_
 
 -  `profile_line()` returns LINESTRING for a set of points
